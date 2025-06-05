@@ -1,54 +1,47 @@
-body { 
+* {
+  box-sizing: border-box;
+}
+
+body {
   font-family: sans-serif;
   background-color: #f9f7f0;
   margin: 0;
-  padding: 20px;
-  box-sizing: border-box;
+  padding: 0;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
-*, *::before, *::after {
-  box-sizing: inherit;
-}
-
 .container {
   background: white;
   border-radius: 10px;
-  padding: 20px;
-  max-width: 1000px;
+  padding: 30px;
   width: 95%;
-  margin: 20px auto;
+  max-width: 100%;
+  min-height: 90vh;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  margin: 30px auto;
   display: flex;
   flex-direction: column;
-  min-height: 80vh;
 }
 
 .tabs {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap; /* Permette più righe su schermi piccoli */
-  margin-bottom: 20px;
+  flex-wrap: wrap;
   gap: 10px;
+  /*margin-bottom: 20px;*/
 }
 
 .tab {
-  padding: 8px 25px;
+  padding: 10px 30px;
   border: none;
   background-color: #f2f2f5;
   border-radius: 8px 8px 0 0;
-  margin: 0 5px;
   font-size: 16px;
   cursor: pointer;
   color: #555;
-  flex: 1 1 auto;
-  max-width: 180px;
-  text-align: center;
-  white-space: nowrap;
-  transition: background-color 0.3s, color 0.3s;
 }
 
 .tab.active {
@@ -67,6 +60,7 @@ body {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .input-group {
@@ -74,7 +68,6 @@ body {
   gap: 10px;
   margin: 20px 0;
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .input-group input,
@@ -83,7 +76,7 @@ body {
   border-radius: 8px;
   border: 1px solid #ddd;
   font-size: 14px;
-  flex: 1 1 200px;  /* permette di ridimensionarsi */
+  flex: 1 1 200px;
   min-width: 150px;
 }
 
@@ -96,38 +89,37 @@ body {
   font-size: 16px;
   cursor: pointer;
   white-space: nowrap;
-  flex-shrink: 0; /* non si rimpicciolisce troppo */
-  transition: background-color 0.3s;
-}
-
-.add-button:hover {
-  background-color: #1c54b2;
 }
 
 .priority-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 colonne fisse su schermi grandi */
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr); /* 2 righe uguali */
   gap: 15px;
   flex-grow: 1;
-  overflow-y: auto;
-  padding-bottom: 10px;
+  height: auto; /* Occupa tutta l’altezza possibile */
+  min-height: 0; /* importante per flexbox */
+}
+
+@media (max-width: 768px) {
+  .priority-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .priority {
   padding: 20px;
   border-radius: 12px;
   font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
-}
-
-.priority ul.task-list {
-  margin-top: 10px;
-  padding-left: 20px;
-  font-weight: normal;
-  overflow-y: auto;
-  max-height: 300px;
+  width: 100%;       /* Riempi tutta la cella */
+  min-height: 150px; /* Altezza minima */
+  height: 100%;
+  display: grid;
+  justify-content: flex-start; /* orizzontalmente a destra */
+  align-items: flex-start;   /* verticalmente in alto */
+  text-align: left;
+  /*box-sizing: border-box;*/
+  /* aspect-ratio: 1 / 1; */ /* Scommenta se vuoi blocchi quadrati */
 }
 
 .urgent-important {
@@ -146,57 +138,16 @@ body {
   background-color: #f1f1f5;
 }
 
-/* Media query per schermi piccoli */
-@media (max-width: 768px) {
-  .input-group input,
-  .input-group select,
-  .add-button {
-    flex: 1 1 100%;
-    min-width: unset;
-  }
-
-  .priority-grid {
-    grid-template-columns: 1fr; /* 1 colonna singola su schermi piccoli */
-  }
-
-  .tabs {
-    justify-content: center;
-  }
-
-  .tab {
-    max-width: none;
-    flex: 1 1 40%;
-  }
+.tab-content {
+  display: none;
 }
 
-@media (max-width: 480px) {
-  body {
-    padding: 10px;
-  }
+.tab-content.active {
+  display: block;
+}
 
-  .priority-grid {
-    grid-template-columns: 1fr; /* 1 colonna singola su schermi piccoli */
-  }
-
-  .container {
-    padding: 15px;
-    width: 100%;
-    max-width: 100%;
-    margin: 10px auto;
-  }
-
-  .input-group {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .tab {
-    flex: 1 1 100%;
-    margin-bottom: 8px;
-    border-radius: 8px;
-  }
-
-  .priority ul.task-list {
-    max-height: 200px;
-  }
+#attive {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* occuperà tutto lo spazio del genitore */
 }

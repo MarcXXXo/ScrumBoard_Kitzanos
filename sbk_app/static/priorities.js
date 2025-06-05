@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      alert('Cambio tab: ' + tab.textContent);
     });
   });
 

@@ -1,24 +1,26 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matrice delle Priorità</title>
-  <link rel="stylesheet" href="{% static 'style.css' %}" />
+  <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
   <div class="container">
+    <!-- Tabs -->
     <div class="tabs">
-      <button class="tab active">Attività Attive</button>
-      <button class="tab">Completate</button>
+      <button class="tab active" type="button" data-tab="attive">Attività Attive</button>
+      <button class="tab" type="button" data-tab="completate">Completate</button>
     </div>
 
-    <div class="card">
+    <!-- Sezione ATTIVE -->
+    <div class="card tab-content active" id="attive">
       <h2>Matrice delle Priorità</h2>
+
       <div class="input-group">
-        <input type="text" placeholder="Descrizione attività" />
+        <input type="text" placeholder="Descrizione attività">
         <select>
           <option>Email</option>
           <option>Telefono</option>
@@ -37,26 +39,25 @@
       </div>
 
       <div class="priority-grid">
-        <div class="priority urgent-important">
-          Urgente e Importante
-          <ul class="task-list"></ul>
-        </div>
-        <div class="priority important-not-urgent">
-          Importante Non Urgente
-          <ul class="task-list"></ul>
-        </div>
-        <div class="priority urgent-not-important">
-          Urgente Non Importante
-          <ul class="task-list"></ul>
-        </div>
-        <div class="priority not-urgent-not-important">
-          Non Urgente Non Importante
-          <ul class="task-list"></ul>
-        </div>
+        <div class="priority urgent-important">Urgente e Importante</div>
+        <div class="priority important-not-urgent">Importante Non Urgente</div>
+        <div class="priority urgent-not-important">Urgente Non Importante</div>
+        <div class="priority not-urgent-not-important">Non Urgente Non Importante</div>
       </div>
+    </div>
+
+    <!-- Sezione COMPLETATE -->
+    <div class="card tab-content" id="completate" >
+      <h2>Attività Completate </h2>
+      <ul class="task-list">
+        <li>✔ Email cliente conclusa</li>
+        <li>✔ Telefonata con fornitore</li>
+        <li>✔ Preparazione documento</li>
+      </ul>
     </div>
   </div>
 
-  <script src="{% static 'js/priorities.js' %}"></script>
+  <script src="{% static 'priorities.js' %}"></script>
+  <script src="{% static 'tabs.js' %}"></script>
 </body>
 </html>
