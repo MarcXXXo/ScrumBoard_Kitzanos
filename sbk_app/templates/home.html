@@ -1,0 +1,62 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Matrice delle Priorità</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <button class="tab active">Attività Attive</button>
+      <button class="tab">Completate</button>
+    </div>
+
+    <div class="card">
+      <h2>Matrice delle Priorità</h2>
+      <div class="input-group">
+        <input type="text" placeholder="Descrizione attività" />
+        <select>
+          <option>Email</option>
+          <option>Telefono</option>
+          <option>Documento</option>
+          <option>Call</option>
+          <option>Task</option>
+          <option>Decisione</option>
+        </select>
+        <select>
+          <option>Urgente e Importante</option>
+          <option>Importante Non Urgente</option>
+          <option>Urgente Non Importante</option>
+          <option>Non Urgente Non Importante</option>
+        </select>
+        <button class="add-button">➕ Aggiungi</button>
+      </div>
+
+      <div class="priority-grid">
+        <div class="priority urgent-important">
+          Urgente e Importante
+          <ul class="task-list"></ul>
+        </div>
+        <div class="priority important-not-urgent">
+          Importante Non Urgente
+          <ul class="task-list"></ul>
+        </div>
+        <div class="priority urgent-not-important">
+          Urgente Non Importante
+          <ul class="task-list"></ul>
+        </div>
+        <div class="priority not-urgent-not-important">
+          Non Urgente Non Importante
+          <ul class="task-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/priorities.js' %}"></script>
+</body>
+</html>

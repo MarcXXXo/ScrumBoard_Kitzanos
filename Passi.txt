@@ -1,0 +1,47 @@
+I Passaggi da compiere per ScrumBoard_Kitzanos
+
+1. Setup del progetto
+
+Creo l’ambiente in cui sviluppare la web app. Django è un framework web basato su Python, utilizzando il comando startproject 
+creo la struttura base del progetto, mentre con startapp creo un modulo riutilizzabile dentro il progetto.
+
+2. Modellazione dei dati (Models)
+
+Definizione della struttura del database. I modelli (models.py) sono la rappresentazione in codice Python delle entità che 
+compongono la web app (es: Task, Utente). Django tradurrà questi modelli in tabelle del database con tutti i campi forniti nei models.
+
+3. Admin e migrazioni
+
+Per rendere operativi i modelli nel database, sono necessarie le migrazioni: Django prende i modelli e li converte in query SQL per creare
+le tabelle nel DB.
+In più, Django fornisce un pannello di amministrazione pronto all’uso per creare, modificare e cancellare facilmente i dati da un’interfaccia web (senza scrivere query).
+
+4. Views e Template
+
+Le views gestiscono la logica dietro ogni pagina: recuperano i dati dal DB e decidono cosa mostrare all’utente.
+
+I templates sono file HTML dinamici: rappresentano il contenuto che viene inviato al browser. Usano un sistema di template 
+engine (Django Template Language) per mescolare HTML e dati Python.
+
+Insieme, views e templates costruiscono le pagine della ScrumBoard_Kitznos.
+
+5. URL Routing
+
+Dicono a Django quale view rispondere a una determinata URL. Questo è fondamentale per navigare tra le varie pagine della tua app.
+Tutti i collegamenti sono nel file urls.py
+
+6. Stile ed Interattività
+
+Con CSS e HTML viene formata la struttura frontend dell' app. Con l'aggiunta di JS si potrebbero implementare funzionalità interattive come drag&drop delle task oppure aggiornare i dati senza ricaricare la pagina.
+
+7. Funzionalità Avanzate
+
+Questa fase serve a rendere la ScrumBoard più professionale e completa, adatta a veri team di sviluppo.
+
+Esempi:
+
+API REST: rendere l'app compatibile con app mobili o frontend separati.
+
+Autenticazione: ogni utente vede solo i suoi task.
+
+Filtri/ricerca: usabilità migliore in progetti grandi.
