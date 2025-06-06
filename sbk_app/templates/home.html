@@ -9,6 +9,9 @@
 </head>
 <body>
   <div class="container">
+    {% if user.is_authenticated %}
+    <h3>Benvenuto {{ user.username }}, vuoi effettuare il <a href="{% url 'logout' %}">Logout</a> ? </h3>
+    {% endif %}
     <!-- Tabs -->
     <div class="tabs">
       <button class="tab active" type="button" data-tab="attive">Attività Attive</button>
