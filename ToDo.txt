@@ -1,0 +1,64 @@
+1. Modello dati per le Task
+Definire modello Task (sbk_app/models.py) con campi come:
+
+titolo (charfield)
+
+descrizione (text)
+
+priorità (enum o int)
+
+stato (attiva, completata)
+
+assegnatario (FK User)
+
+creatore (FK User)
+
+timestamp (creazione, aggiornamento)
+
+2. CRUD task (Create, Read, Update, Delete)
+Vista e template per:
+
+Creare nuove task (form)
+
+Visualizzare task divise per stato (attive/completate) e priorità
+
+Modificare task (modal o pagina separata)
+
+Completare task (cambio stato)
+
+Eliminare task
+
+3. Gestione permessi e visibilità
+Utente standard: vede solo task assegnate o create da sé
+
+Coordinatore/admin: vede tutte le task
+
+Implementare controllo in backend (filtri query) e frontend
+
+4. Interfaccia utente funzionale
+Pannello principale con tab o sezioni per task attive e completate
+
+Ordinamento per priorità o data
+
+Pulsanti azione su ogni task (modifica, completa, elimina)
+
+Eventuali notifiche o feedback (messaggi success/fail)
+
+5. Validazioni e sicurezza
+Validazione lato backend dei dati (es. non task senza titolo)
+
+Protezione contro accesso non autorizzato (decoratori login_required, permessi)
+
+6. Ottimizzazione e UX
+Eventuale uso di AJAX per azioni senza ricaricare pagina (completamento task)
+
+Feedback visivi immediati (colori, animazioni leggere)
+
+Responsive design per mobile/tablet
+
+Bonus (opzionale)
+Filtro ricerca task
+
+Commenti o note sulle task
+
+Dashboard con statistiche (task completate, tempo medio, ecc.)

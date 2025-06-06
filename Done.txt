@@ -1,0 +1,13 @@
+Inizializzazione Progetto
+
+Interfaccia Dashboard
+
+Database inizializzato
+
+Autenticazione utenti (login, logout, registrazione)
+
+Gestione base dei form (convalidata, con messaggi di aiuto password)
+
+Stile CSS coerente Login e Registrazione, font personalizzato 
+
+Redirect corretti e gestione URL organizzata (config/urls.py, accounts/urls.py, sbk_app/urls.py)
