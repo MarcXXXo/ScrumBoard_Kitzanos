@@ -1,24 +1,28 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="{% static 'login-reg.css' %}">
 </head>
 <body>
-    <h2>Login</h2>
-    {% if messages %}
-        {% for message in messages %}
-            <p style="color: red;">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
-    <form method="POST">
-        {% csrf_token %}
-        <label for="username">Username:</label><br>
-        <input type="text" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" name="password"><br><br>
-        <button type="submit">Accedi</button>
-        <p>Non hai un account? <a href="{% url 'register' %}">Registrati qui</a></p>
-    </form>
+    <div class="form-container">
+        <h2>Login</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color: red;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <label for="username">Username:</label><br>
+            <input type="text" name="username"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" name="password"><br><br>
+            <button type="submit">Accedi</button>
+            <p>Non hai un account? <a href="{% url 'register' %}">Registrati qui</a></p>
+        </form>
+    </div>
 </body>
 </html>

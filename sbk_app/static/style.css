@@ -2,8 +2,16 @@
   box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/static/fonts/Montserrat-Regular.ttf') format('truetype');
+}
+
+body, input, textarea, select, button {
+    font-family: 'Montserrat', sans-serif;
+}
+
 body {
-  font-family: sans-serif;
   background-color: #f9f7f0;
   margin: 0;
   padding: 0;
