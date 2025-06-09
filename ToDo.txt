@@ -13,7 +13,7 @@ assegnatario (FK User)
 
 creatore (FK User)
 
-timestamp (creazione, aggiornamento)
+timestamp (creazione, aggiornamento)                FATTO
 
 2. CRUD task (Create, Read, Update, Delete)
 Vista e template per:
@@ -24,7 +24,7 @@ Visualizzare task divise per stato (attive/completate) e priorità
 
 Modificare task (modal o pagina separata)
 
-Completare task (cambio stato)
+Completare task (cambio stato)   ------ARRIVATO QUI, bisogna trovare modo per refresh o capire dove sgarra il frontend al cambio di tab della task
 
 Eliminare task
 
