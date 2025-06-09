@@ -1,14 +1,15 @@
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('http://127.0.0.1:8000/static/font/Montserrat-VariableFont_wght.ttf') format('truetype');
+}
+
 * {
   box-sizing: border-box;
 }
 
-@font-face {
-    font-family: 'Montserrat';
-    src: url('/static/fonts/Montserrat-Regular.ttf') format('truetype');
-}
-
 body, input, textarea, select, button {
-    font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 body {
@@ -25,7 +26,7 @@ body {
   background: white;
   border-radius: 10px;
   padding: 30px;
-  width: 95%;
+  width: 60vw;
   max-width: 100%;
   min-height: 90vh;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
@@ -39,7 +40,6 @@ body {
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  /*margin-bottom: 20px;*/
 }
 
 .tab {
@@ -102,11 +102,10 @@ body {
 .priority-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr); /* 2 righe uguali */
   gap: 15px;
   flex-grow: 1;
-  height: auto; /* Occupa tutta l’altezza possibile */
-  min-height: 0; /* importante per flexbox */
+  height: auto;
+  min-height: 0;
 }
 
 @media (max-width: 768px) {
@@ -119,19 +118,18 @@ body {
   padding: 20px;
   border-radius: 12px;
   font-weight: bold;
-  width: 100%;       /* Riempi tutta la cella */
-  min-height: 150px; /* Altezza minima */
+  width: 100%;
+  min-height: 150px;
   height: 100%;
   display: grid;
-  justify-content: flex-start; /* orizzontalmente a destra */
-  align-items: flex-start;   /* verticalmente in alto */
+
+  align-items: flex-start;
   text-align: left;
-  /*box-sizing: border-box;*/
-  /* aspect-ratio: 1 / 1; */ /* Scommenta se vuoi blocchi quadrati */
 }
 
 .urgent-important {
   background-color: #ffe5e5;
+  
 }
 
 .important-not-urgent {
@@ -154,37 +152,112 @@ body {
   display: block;
 }
 
-/*#attive {
+/* CARD TASK MODIFICATA */
+.task-card {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  height: 140px;
+  width: 90%;
+  max-width: 400px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 100%; /* occuperà tutto lo spazio del genitore 
-}*/
+  justify-content: space-between;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+  margin: 0 auto 1rem auto;
+}
 
-.completed-task-list {
+.task-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 10px;
-  margin-top: 20px;
 }
 
-.completed-task {
-  background-color: #f9f9f9;
-  padding: 12px 16px;
-  border-radius: 10px;
+.task-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #222;
+  line-height: 1.2;
+  max-height: 2.5em; /* massimo 2 righe */
+  overflow: hidden;
+  display: -webkit-box;
+  /*-webkit-line-clamp: 2;*/
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+
+.task-user {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #555;
+  white-space: nowrap;
+  max-width: 40%;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-divider {
+  border-top: 1px solid #ddd;
+  margin: 6px 0;
+}
+
+.task-details {
+  font-size: 0.85em;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-buttons {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  justify-content: space-between;
+  gap: 6px;
 }
 
-.task-icon {
-  font-size: 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.task-buttons button {
+  font-size: 0.8em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.task-text {
-  font-size: 16px;
-  color: #333;
+.task-buttons .edit {
+  background-color: #f0ad4e;
+  color: white;
+}
+
+.task-buttons .complete {
+  background-color: #5cb85c;
+  color: white;
+}
+
+.task-buttons .delete {
+  background-color: #d9534f;
+  color: white;
+}
+
+.task-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.6rem;
+}
+
+.task-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+.task-actions button:hover {
+  color: #2979ff;
 }

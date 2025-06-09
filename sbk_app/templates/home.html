@@ -6,12 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matrice delle Priorità</title>
   <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <div class="container">
     {% if user.is_authenticated %}
     <h3>Benvenuto {{ user.username }}, vuoi effettuare il <a href="{% url 'logout' %}">Logout</a> ? </h3>
     {% endif %}
+
     <!-- Tabs -->
     <div class="tabs">
       <button class="tab active" type="button" data-tab="attive">Attività Attive</button>
@@ -20,52 +22,162 @@
 
     <!-- Sezione ATTIVE -->
     <div class="card tab-content active" id="attive">
-      <h2>Matrice delle Priorità</h2>
 
-      <div class="input-group">
-        <input type="text" placeholder="Descrizione attività">
-        <select>
-          <option>Email</option>
-          <option>Telefono</option>
-          <option>Documento</option>
-          <option>Call</option>
-          <option>Task</option>
-          <option>Decisione</option>
+      <h2>Matrice delle Priorità </h2> 
+      <div id="task-edit-id-display">{{task.task_id}}</div>
+
+      <form method="POST" class="input-group">
+        {% csrf_token %}
+        <input type="hidden" name="task_id" id="task_id">
+        <input type="text" name="descrizione" id="descrizione" placeholder="Descrizione attività" required>
+      
+        <select name="tipo" id="tipo" required>
+          <option value="Email">Email</option>
+          <option value="Telefono">Telefono</option>
+          <option value="Documento">Documento</option>
+          <option value="Call">Call</option>
+          <option value="Task">Task</option>
+          <option value="Decisione">Decisione</option>
         </select>
-        <select>
-          <option>Urgente e Importante</option>
-          <option>Importante Non Urgente</option>
-          <option>Urgente Non Importante</option>
-          <option>Non Urgente Non Importante</option>
+      
+        <select name="priorita" id="priorita" required>
+          <option value="UI">Urgente e Importante</option>
+          <option value="IN">Importante Non Urgente</option>
+          <option value="UN">Urgente Non Importante</option>
+          <option value="NN">Non Urgente Non Importante</option>
         </select>
-        <button class="add-button">➕ Aggiungi</button>
-      </div>
+      
+        <button type="submit" class="add-button" id="form-button">Aggiungi</button>
+      </form>
 
       <div class="priority-grid">
-        <div class="priority urgent-important">Urgente e Importante</div>
-        <div class="priority important-not-urgent">Importante Non Urgente</div>
-        <div class="priority urgent-not-important">Urgente Non Importante</div>
-        <div class="priority not-urgent-not-important">Non Urgente Non Importante</div>
+
+        <div class="priority urgent-important">
+          <h3>Urgente e Importante</h3>
+          {% for task in tasks_ui %}
+            <div class="task-card" >
+              <div class="task-header">
+                <div class="task-title">{{ task.descrizione }}</div>
+                <div class="task-creator">{{ task.creatore.username }}</div>
+              </div>
+              <div class="task-details">
+                <p><strong> {{ task.tipo }}</strong></p>
+                <div class="task-actions">
+                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}"> <i class="fa fa-pencil-alt"></i></button>
+                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><i class="fa fa-check"></i></button>
+                  <button class="delete-task" title="Elimina"><i class="fa fa-trash"></i></button>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <p>Nessuna task in questa priorità</p>
+          {% endfor %}
+        </div>
+
+        <div class="priority important-not-urgent">
+          <h3>Importante Non Urgente</h3>
+          {% for task in tasks_in %}
+            <div class="task-card">
+              <div class="task-header">
+                <div class="task-title">{{ task.descrizione }}</div>
+                <div class="task-creator">{{ task.creatore.username }}</div>
+              </div>
+              <div class="task-details">
+                <p><strong> {{ task.tipo }}</strong></p>
+                <div class="task-actions">
+                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}"> <i class="fa fa-pencil-alt"></i></button>
+                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><i class="fa fa-check"></i></button>
+                  <button class="delete-task" title="Elimina"><i class="fa fa-trash"></i></button>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <p>Nessuna task in questa priorità</p>
+          {% endfor %}
+        </div>
+
+        <div class="priority urgent-not-important">
+          <h3>Urgente Non Importante</h3>
+          {% for task in tasks_un %}
+            <div class="task-card">
+              <div class="task-header">
+                <div class="task-title">{{ task.descrizione }}</div>
+                <div class="task-creator">{{ task.creatore.username }}</div>
+              </div>
+              <div class="task-details">
+                <p><strong> {{ task.tipo }}</strong></p>
+                <div class="task-actions">
+                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}"> <i class="fa fa-pencil-alt"></i></button>
+                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><i class="fa fa-check"></i></button>
+                  <button class="delete-task" title="Elimina"><i class="fa fa-trash"></i></button>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <p>Nessuna task in questa priorità</p>
+          {% endfor %}
+        </div>
+
+        <div class="priority not-urgent-not-important">
+          <h3>Non Urgente Non Importante</h3>
+          {% for task in tasks_nn %}
+            <div class="task-card">
+              <div class="task-header">
+                <div class="task-title">{{ task.descrizione }}</div>                
+                <div class="task-creator">{{ task.creatore.username }}</div>
+              </div>
+              <div class="task-details">
+                <p><strong> {{ task.tipo }}</strong></p>
+                <div class="task-actions">
+                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}"> <i class="fa fa-pencil-alt"></i></button>
+                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><i class="fa fa-check"></i></button>
+                  <button class="delete-task" title="Elimina"><i class="fa fa-trash"></i></button>
+                </div>
+              </div>
+            </div>
+          {% empty %}
+            <p>Nessuna task in questa priorità</p>
+          {% endfor %}
+        </div>
+
       </div>
     </div>
 
     <!-- Sezione COMPLETATE -->
     <div class="card tab-content" id="completate" >
-      <h2>Attività Completate </h2>
-          <div class="completed-task-list">
-            <div class="completed-task">
-              <span class="task-icon">📋</span>
-              <span class="task-text">Applicazione</span>
+      <h2>Attività Completate</h2>
+
+      <div class="completed-task-list">
+        {% if completate %}
+          {% for task in completate %}
+            <div class="task-card">
+              <div class="task-header">
+                <div class="task-creator">{{ task.creatore.username }}</div>
+                <div class="task-title">{{ task.descrizione }}</div>
+              </div>
+              <div class="task-details">
+                <p><strong>Tipo:</strong> {{ task.tipo }}</p>
+                <p><strong>Priorità:</strong> 
+                  {% if task.priorita == "UI" %}Urgente e Importante{% endif %}
+                  {% if task.priorita == "IN" %}Importante Non Urgente{% endif %}
+                  {% if task.priorita == "UN" %}Urgente Non Importante{% endif %}
+                  {% if task.priorita == "NN" %}Non Urgente Non Importante{% endif %}
+                </p>
+              </div>
             </div>
-            <div class="completed-task">
-              <span class="task-icon">✉️</span>
-              <span class="task-text">App</span>
-            </div>
-          </div>
+          {% endfor %}
+        {% else %}
+          <p>Nessuna task completata</p>
+        {% endif %}
+      </div>
     </div>
   </div>
 
   <script src="{% static 'priorities.js' %}"></script>
   <script src="{% static 'tabs.js' %}"></script>
+  <script src="{% static 'task.js' %}"></script>
+  <script>
+    document.cookie = "csrftoken={{ csrf_token }}";
+  </script>
 </body>
 </html>
