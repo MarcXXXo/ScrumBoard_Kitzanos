@@ -90,4 +90,15 @@ form ul li {
     margin-bottom: 0.3rem;
 }
 
+input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 0.5rem;
+}
 
+/* Per allineare meglio l'etichetta e il checkbox */
+p:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+}

@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 
+from accounts.forms import CustomUserCreationForm
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -24,12 +26,13 @@ def logout_view(request):
 
 def register_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)  # login automatico dopo registrazione
-            return redirect('home')  
+            user = form.save(commit=False)
+            # Usa is_coordinator per settare is_staff
+            user.is_staff = form.cleaned_data.get('is_coordinator', False)
+            user.save()
+            return redirect('login')
     else:
-        form = UserCreationForm()
-    
+        form = CustomUserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
