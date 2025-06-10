@@ -23,6 +23,7 @@ def home(request):
             task.tipo = request.POST.get('tipo')
             task.priorita = request.POST.get('priorita')
             task.save()
+            return redirect('home')
         else:
 
             Task.objects.create(
@@ -57,11 +58,16 @@ def complete_task(request):
     print(">>> CHIAMATA ARRIVATA A complete_taskA") 
     task_id = request.POST.get('task_id')
     if task_id:
+        
         try:
             task = Task.objects.get(id=task_id)
             task.completata= True
             task.save()
-            return JsonResponse({'success': True})
+            
+            
+            return  JsonResponse({'success': True})
+        
         except Task.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Task non trovata'})
     return JsonResponse({'success': False, 'error': 'ID mancante'})
+   

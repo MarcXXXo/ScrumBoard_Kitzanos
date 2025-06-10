@@ -70,7 +70,7 @@
               </div>
             </div>
           {% empty %}
-            <p>Nessuna task in questa priorità</p>
+            <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
           {% endfor %}
         </div>
 
@@ -92,7 +92,7 @@
               </div>
             </div>
           {% empty %}
-            <p>Nessuna task in questa priorità</p>
+            <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
           {% endfor %}
         </div>
 
@@ -105,7 +105,9 @@
                 <div class="task-creator">{{ task.creatore.username }}</div>
               </div>
               <div class="task-details">
-                <p><strong> {{ task.tipo }}</strong></p>
+                <div class="task-type">
+                  <p><strong> {{ task.tipo }}</strong></p>
+                </div>
                 <div class="task-actions">
                   <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}"> <i class="fa fa-pencil-alt"></i></button>
                   <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><i class="fa fa-check"></i></button>
@@ -114,7 +116,7 @@
               </div>
             </div>
           {% empty %}
-            <p>Nessuna task in questa priorità</p>
+           <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
           {% endfor %}
         </div>
 
@@ -136,7 +138,7 @@
               </div>
             </div>
           {% empty %}
-            <p>Nessuna task in questa priorità</p>
+            <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
           {% endfor %}
         </div>
 

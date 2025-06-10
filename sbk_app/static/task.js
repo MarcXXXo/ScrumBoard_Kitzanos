@@ -23,7 +23,7 @@ document.querySelectorAll('.edit-task').forEach(button => {
 
 document.querySelectorAll('.complete-task').forEach(button => {
   button.addEventListener('click', function() {
-    const taskId = this.dataset.taskId; // Assumi che l'icona abbia data-task-id
+    const taskId = this.dataset.taskId;
 
     fetch('complete_task/', {
       method: 'POST',
@@ -40,13 +40,16 @@ document.querySelectorAll('.complete-task').forEach(button => {
         const taskCard = this.closest('.task-card');
         const completedTab = document.getElementById('completate'); // id tab completate
         completedTab.appendChild(taskCard);
-
         // Eventualmente cambia stile o rimuovi pulsante completa
-        this.remove();
+        //this.remove();
+        //const editIcon = document.getElementsByClassName(".edit-task");
+        //editIcon.remove();
       } else {
         alert('Errore completando la task: ' + data.error);
       }
+      window.location.reload();
     })
+
     .catch(error => alert('Errore di rete'));
   });
 });
