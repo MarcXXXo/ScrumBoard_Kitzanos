@@ -24,7 +24,7 @@ document.querySelectorAll('.edit-task').forEach(button => {
 document.querySelectorAll('.complete-task').forEach(button => {
   button.addEventListener('click', function() {
     const taskId = this.dataset.taskId;
-
+    console.log("ID completa:", taskId);
     fetch('complete_task/', {
       method: 'POST',
       headers: {
@@ -53,6 +53,51 @@ document.querySelectorAll('.complete-task').forEach(button => {
     .catch(error => alert('Errore di rete'));
   });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".delete-task").forEach(button => {
+    button.addEventListener("click", function () {
+      const taskId = this.getAttribute("data-task-id");
+      if (confirm("Sei sicuro di voler eliminare questa attività?")) {
+        deleteTask(taskId);
+      }
+    });
+  });
+});
+
+function deleteTask(taskId) {
+  fetch(`elimina_task/${taskId}/`, {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": getCookie1("csrftoken")
+    }
+  })
+    .then(response => {
+      if (response.ok) {
+        location.reload();  // Ricarica la pagina per aggiornare la lista
+      } else {
+        alert("Errore durante l'eliminazione della task.");
+      }
+    });
+}
+
+// Funzione per leggere il token CSRF dai cookie
+function getCookie1(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Cerchiamo il nome
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 
 // Funzione per prendere il cookie csrf
 function getCookie(name) {

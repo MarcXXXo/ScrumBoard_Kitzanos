@@ -71,3 +71,18 @@ def complete_task(request):
             return JsonResponse({'success': False, 'error': 'Task non trovata'})
     return JsonResponse({'success': False, 'error': 'ID mancante'})
    
+@require_POST
+@login_required
+def elimina_task(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+
+        # Controllo: solo il creatore o il coordinatore possono eliminare
+        if request.user == task.creatore or request.user.is_staff:
+            task.delete()
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse({"success": False, "error": "Non autorizzato"}, status=403)
+
+    except Task.DoesNotExist:
+        return JsonResponse({"success": False, "error": "Task non trovata"}, status=404)
