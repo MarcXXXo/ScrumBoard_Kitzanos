@@ -6,18 +6,25 @@ document.querySelectorAll('.edit-task').forEach(button => {
         const descrizione = card.querySelector('.task-title').innerText;
         const tipo = this.dataset.tipo;
         const priorita = this.dataset.priorita;
+        const form = document.getElementById('tabs');
+        if (form && typeof form.scrollIntoView === 'function') {
+          form.scrollIntoView({ behavior: 'smooth', block: 'start'  });
+        }
+
 
         // Riempie i campi del form
         document.getElementById('task_id').value = taskId;
         document.getElementById('descrizione').value = descrizione;
         document.getElementById('tipo').value = tipo;
         document.getElementById('priorita').value = priorita;
-
+        
+        
         // Cambia il testo del bottone
         document.getElementById('form-button').innerText = "Salva Modifiche";
         editingTaskId = taskId;
         console.log('Task da modificare:', editingTaskId);
-        document.getElementById('task-edit-id-display').innerText = 'Modificando task ID: ' + editingTaskId;
+        
+        //document.getElementById('task-edit-id-display').innerText = 'Modificando task ID: ' + editingTaskId;
     });
 });
 

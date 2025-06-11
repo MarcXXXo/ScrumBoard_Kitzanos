@@ -15,7 +15,7 @@
       <div class="header"><h3>Benvenuto {{ user.username }}</h3> <h3><a href="{% url 'logout' %}">Logout</a></h3></div>
     {% endif %}
     <!-- Tabs -->
-    <div class="tabs">
+    <div class="tabs" id = "tabs">
       <button class="tab active" type="button" data-tab="attive">Attività Attive</button>
       <button class="tab" type="button" data-tab="completate">Completate</button>
     </div>
@@ -26,7 +26,7 @@
       <h2>Matrice delle Priorità </h2> 
       <div id="task-edit-id-display">{{task.task_id}}</div>
 
-      <form method="POST" class="input-group">
+      <form method="POST" class="input-group" id ="input-group">
         {% csrf_token %}
         <input type="hidden" name="task_id" id="task_id" >
         <input maxlength="25" title ="Max 25 caratteri" type="text" name="descrizione" id="descrizione" placeholder="Descrizione attività" required>
