@@ -24,6 +24,7 @@ class Task(models.Model):
     priorita = models.CharField(max_length=2, choices=PRIORITA_CHOICES)
     creatore = models.ForeignKey(User, on_delete=models.CASCADE)
     modificato_da = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='tasks_modifica')
+    assegnato_a = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="task_assegnate")
     completata = models.BooleanField(default=False)
     data_creazione = models.DateTimeField(auto_now_add=True)
 

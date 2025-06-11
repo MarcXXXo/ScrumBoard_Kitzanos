@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Matrice delle Priorità</title>
   <link rel="stylesheet" href="{% static 'style.css' %}">
-  <link rel="stylesheet" href="{% static 'font/Montserrat-VariableFont_wght.ttf' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'font/Montserrat-Thin.woff2' %}">
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">-->
 </head>
 <body>
   <div class="container">
@@ -46,6 +46,14 @@
           <option value="UN">Urgente Non Importante</option>
           <option value="NN">Non Urgente Non Importante</option>
         </select>
+        {% if user.is_superuser %}
+        <select name="assegnato_a" id="assegnato_a">
+          <option value="" selected>Nessun Assegnatario</option>
+          {% for utente in utenti %}
+          <option value="{{ utente.id }}">{{ utente.username }}</option>
+          {% endfor %}
+        </select>
+        {% endif %}
       
         <button type="submit" class="add-button" id="form-button">Aggiungi</button>
       </form>
@@ -62,15 +70,15 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
-                  <p> {{ task.tipo }}</p>
                   {% if task.modificato_da %}
                     <p><small>Modificata da: {{ task.modificato_da.username }}</small></p>
                   {% endif %}
+                  <p> {{ task.tipo }}</p>
                 </div>
                 <div class="task-actions">
-                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <i class="fa fa-pencil-alt"></i></button>
-                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><i class="fa fa-check"></i></button>
-                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"><i class="fa fa-trash"></i></button>
+                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/></button>
+                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"> <img src="{% static 'icone/check.svg' %}"/></button>
+                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"> <img src="{% static 'icone/trash.svg' %}"/></button>
                 </div>
               </div>
             </div>
@@ -89,12 +97,15 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
-                  <p><strong> {{ task.tipo }}</strong></p>
+                  {% if task.modificato_da %}
+                    <p><small>Modificata da: {{ task.modificato_da.username }}</small></p>
+                  {% endif %}
+                  <p> {{ task.tipo }}</p>
                 </div>
                 <div class="task-actions">
-                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <i class="fa fa-pencil-alt"></i></button>
-                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><i class="fa fa-check"></i></button>
-                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"><i class="fa fa-trash"></i></button>
+                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/></button>
+                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"> <img src="{% static 'icone/check.svg' %}"/></button>
+                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"> <img src="{% static 'icone/trash.svg' %}"/></button>
                 </div>
               </div>
             </div>
@@ -113,12 +124,15 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
-                  <p><strong> {{ task.tipo }}</strong></p>
+                  {% if task.modificato_da %}
+                    <p><small>Modificata da: {{ task.modificato_da.username }}</small></p>
+                  {% endif %}
+                  <p> {{ task.tipo }}</p>
                 </div>
                 <div class="task-actions">
-                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <i class="fa fa-pencil-alt"></i></button>
-                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><i class="fa fa-check"></i></button>
-                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"><i class="fa fa-trash"></i></button>
+                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/></button>
+                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><img src="{% static 'icone/check.svg' %}"/></button>
+                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"><img src="{% static 'icone/trash.svg' %}"/></button>
                 </div>
               </div>
             </div>
@@ -137,12 +151,15 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
-                  <p><strong> {{ task.tipo }}</strong></p>
+                  {% if task.modificato_da %}
+                    <p><small>Modificata da: {{ task.modificato_da.username }}</small></p>
+                  {% endif %}
+                  <p> {{ task.tipo }}</p>
                 </div>
                 <div class="task-actions">
-                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <i class="fa fa-pencil-alt"></i></button>
-                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><i class="fa fa-check"></i></button>
-                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"><i class="fa fa-trash"></i></button>
+                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/> </button>
+                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><img src="{% static 'icone/check.svg' %}"/></button>
+                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"><img src="{% static 'icone/trash.svg' %}"/></button>
                 </div>
               </div>
             </div>
@@ -167,14 +184,14 @@
                 
               </div>
               <div class="task-details-complete">
-                <p class="footer-info"><strong>Tipo:</strong> {{ task.tipo }}</p>
-                <p class="footer-info"><strong>Priorità:</strong> 
-                  {% if task.priorita == "UI" %}Urgente e Importante{% endif %}
-                  {% if task.priorita == "IN" %}Importante Non Urgente{% endif %}
-                  {% if task.priorita == "UN" %}Urgente Non Importante{% endif %}
-                  {% if task.priorita == "NN" %}Non Urgente Non Importante{% endif %}
+                <p class="footer-info"><strong> {{ task.tipo }}</strong></p>
+                <p class="footer-info">
+                  {% if task.priorita == "UI" %}<strong>Urgente e Importante</strong> {% endif %}
+                  {% if task.priorita == "IN" %}<strong>Importante Non Urgente</strong>{% endif %}
+                  {% if task.priorita == "UN" %}<strong>Urgente Non Importante</strong>{% endif %}
+                  {% if task.priorita == "NN" %}<strong>Non Urgente Non Importante</strong>{% endif %}
                 </p>
-                <p class="footer-info"><strong>Creatore:</strong>{{ task.creatore.username }}</p>
+                <p class="footer-info">Creata da <strong>{{ task.creatore.username }}</strong></p>
               </div>
             </div>
           {% endfor %}

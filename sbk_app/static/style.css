@@ -296,9 +296,12 @@ h3{
 }
 
 .task-actions {
+  margin-top: 2.3rem;
+  flex-wrap: nowrap;
   display: flex;
-  justify-content: flex-end;
-  margin-top: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+  /*flex-direction: column*/;
 }
 
 .task-actions button {

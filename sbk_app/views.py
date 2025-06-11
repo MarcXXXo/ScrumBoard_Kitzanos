@@ -15,7 +15,10 @@ def home(request):
         tipo = request.POST.get('tipo')
         priorita = request.POST.get('priorita')
         task_id = request.POST.get('task_id')
-        
+        assegnato_id = request.POST.get('assegnato_a')
+        assegnato_user = User.objects.get(id=assegnato_id) if assegnato_id else None 
+        if(assegnato_user!= None): request.user = assegnato_user
+
         if task_id:
             # MODIFICA
             task = get_object_or_404(Task, id=task_id)
@@ -25,13 +28,16 @@ def home(request):
             task.modificato_da = request.user
             task.save()
             return redirect('home')
+        
         else:
 
             Task.objects.create(
                 descrizione=descrizione,
                 tipo=tipo,
                 priorita=priorita,
-                creatore=request.user
+                creatore=request.user,
+                #assegnato_a = assegnato_user
+                
             )
         return redirect('home')
 
@@ -41,6 +47,7 @@ def home(request):
     tasks_nn = Task.objects.filter(priorita='NN', completata=False)
 
     completate = Task.objects.filter(completata=True)
+    utenti = User.objects.all() if request.user.is_superuser else []
 
     context = {
         'tasks_ui': tasks_ui,
@@ -48,15 +55,14 @@ def home(request):
         'tasks_un': tasks_un,
         'tasks_nn': tasks_nn,
         'completate': completate,
+        'utenti': utenti,
     }
 
     return render(request, "home.html", context)
 
 
-
 @require_POST
 def complete_task(request):
-    print(">>> CHIAMATA ARRIVATA A complete_taskA") 
     task_id = request.POST.get('task_id')
     if task_id:
         
