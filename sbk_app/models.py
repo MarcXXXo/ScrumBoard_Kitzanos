@@ -19,10 +19,11 @@ class Task(models.Model):
     ]
 
     #task_id = models.IntegerField(models.UUIDField)
-    descrizione = models.CharField(max_length=255)
+    descrizione = models.CharField(max_length=25)
     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
     priorita = models.CharField(max_length=2, choices=PRIORITA_CHOICES)
     creatore = models.ForeignKey(User, on_delete=models.CASCADE)
+    modificato_da = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='tasks_modifica')
     completata = models.BooleanField(default=False)
     data_creazione = models.DateTimeField(auto_now_add=True)
 

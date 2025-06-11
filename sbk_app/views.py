@@ -22,6 +22,7 @@ def home(request):
             task.descrizione = request.POST.get('descrizione')
             task.tipo = request.POST.get('tipo')
             task.priorita = request.POST.get('priorita')
+            task.modificato_da = request.user
             task.save()
             return redirect('home')
         else:

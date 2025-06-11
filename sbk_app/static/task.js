@@ -69,33 +69,20 @@ function deleteTask(taskId) {
   fetch(`elimina_task/${taskId}/`, {
     method: "POST",
     headers: {
-      "X-CSRFToken": getCookie1("csrftoken")
+      "X-CSRFToken": getCookie("csrftoken")
     }
   })
     .then(response => {
       if (response.ok) {
         location.reload();  // Ricarica la pagina per aggiornare la lista
       } else {
-        alert("Errore durante l'eliminazione della task.");
+          if(response.status == 403)
+            alert("Non disponi delle autorizzazioni per eliminare la task");
+          else{
+            alert("Non trovo questa task");
+          }
       }
     });
-}
-
-// Funzione per leggere il token CSRF dai cookie
-function getCookie1(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      // Cerchiamo il nome
-      if (cookie.substring(0, name.length + 1) === name + "=") {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
 }
 
 
