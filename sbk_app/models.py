@@ -27,6 +27,7 @@ class Task(models.Model):
     assegnato_a = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="task_assegnate")
     completata = models.BooleanField(default=False)
     data_creazione = models.DateTimeField(auto_now_add=True)
+    note = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.descrizione} - {self.priorita}"

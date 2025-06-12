@@ -12,13 +12,15 @@ from django.views.decorators.http import require_POST
 @login_required(login_url='/accounts/login/')
 def home(request):
     user = request.user
+    assegnato_user = None  
     if request.method == 'POST':
         descrizione = request.POST.get('descrizione')
         tipo = request.POST.get('tipo')
         priorita = request.POST.get('priorita')
         task_id = request.POST.get('task_id')
         assegnato_id = request.POST.get('assegnato_a')
-        assegnato_user = User.objects.get(id=assegnato_id) if assegnato_id else None 
+        note = request.POST.get("note", "")
+        if(assegnato_id):assegnato_user = User.objects.get(id=assegnato_id) #if assegnato_id else None 
 
         if task_id:
             # MODIFICA
@@ -27,30 +29,22 @@ def home(request):
             task.tipo = request.POST.get('tipo')
             task.priorita = request.POST.get('priorita')
             task.modificato_da = request.user
+            task.note = request.POST.get('note')
             if(assegnato_user != None): task.creatore = assegnato_user #assegnata da coordinatore
-
             task.save()
             return redirect('home')
         
         else:
-
+            if(assegnato_id): user = assegnato_user 
             Task.objects.create(
                 descrizione=descrizione,
                 tipo=tipo,
                 priorita=priorita,
-                creatore=request.user,
-                #assegnato_a = assegnato_user
-                
+                creatore=user,
+                note=note,
             )
         return redirect('home')
-
-    #tasks_ui = Task.objects.filter(priorita='UI', completata=False)
-    #tasks_in = Task.objects.filter(priorita='IN', completata=False)
-    #tasks_un = Task.objects.filter(priorita='UN', completata=False)
-    #tasks_nn = Task.objects.filter(priorita='NN', completata=False)
-
-    #completate = Task.objects.filter(completata=True)
-    #utenti = User.objects.all() if request.user.is_superuser else []
+    
     if user.is_superuser:
         # Il coordinatore vede tutto
         tasks_ui = Task.objects.filter(priorita='UI', completata=False)

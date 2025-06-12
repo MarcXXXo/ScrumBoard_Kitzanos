@@ -108,3 +108,72 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("task-search");
+  const tipoFilter = document.getElementById("filter-tipo");
+  const prioritaFilter = document.getElementById("filter-priorita");
+  const utenteFilter = document.getElementById("filter-utente"); // opzionale
+  //console.log("Filtro attivo:", { descrizione, tipo, priorita });
+
+  const taskCards = document.querySelectorAll(".task-card");
+
+  function filtraTask() {
+    const search = searchInput.value.toLowerCase();
+    const tipo = tipoFilter.value;
+    const priorita = prioritaFilter.value;
+    const utente = utenteFilter?.value || "";
+
+    taskCards.forEach(card => {
+      const descrizione = card.querySelector(".task-title")?.innerText.toLowerCase() || "";
+      const tipoText = card.querySelector(".task-type")?.innerText || "";
+      const prioritaContainer = card.closest(".priority");
+      const hasPriorita = prioritaContainer?.classList?.contains(prioritaToClass(priorita));
+
+      const creatore = card.querySelector(".task-creator")?.innerText || "";
+
+      const matchSearch = descrizione.includes(search) || tipoText.toLowerCase().includes(search) || creatore.toLowerCase().includes(search);
+      const matchTipo = tipo === "" || tipoText.includes(tipo);
+      const  matchPriorita = priorita === "" || hasPriorita;
+      const matchUtente = utente === "" || creatore === utente;
+
+      const visible = matchSearch && matchTipo && matchPriorita && matchUtente;
+      //console.log({ descrizione, tipo, creatore, visible });
+      card.style.display = visible ? "block" : "none";
+    });
+  }
+
+  function prioritaToClass(code) {
+    return {
+      UI: "urgent-important",
+      IN: "important-not-urgent",
+      UN: "urgent-not-important",
+      NN: "not-urgent-not-important"
+    }[code] || "";
+  }
+
+  searchInput.addEventListener("input", filtraTask);
+  tipoFilter.addEventListener("change", filtraTask);
+  prioritaFilter.addEventListener("change", filtraTask);
+  if (utenteFilter) utenteFilter.addEventListener("change", filtraTask);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("filterToggle");
+  const menu = document.getElementById("filterMenu");
+
+  toggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("show");
+    const expanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", (!expanded).toString());
+  });
+
+  // Chiude il menu se clicchi fuori
+  document.addEventListener("click", (e) => {
+    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+      menu.classList.remove("show");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+  });
+});

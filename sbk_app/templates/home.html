@@ -22,6 +22,48 @@
 
     <!-- Sezione ATTIVE -->
     <div class="card tab-content active" id="attive">
+      <div class="task-filter-bar">
+        <!-- Campo di ricerca sempre visibile -->
+        <input type="text" id="task-search" class="task-search" placeholder="Cerca per descrizione, tipo o utente...">
+      
+        <!-- Wrapper dropdown -->
+        <div class="dropdown">
+          <!-- Icona per mostrare/nascondere il menu -->
+          <button id="filterToggle" class="dropbtn" aria-haspopup="true" aria-expanded="false">
+            <img src="{% static 'icone/filter.svg' %}" alt="Filtri" style="width: 24px; height: 24px;">
+          </button>
+      
+          <!-- Menu a comparsa -->
+          <div id="filterMenu" class="dropdown-content" role="menu" aria-labelledby="filterToggle">
+            <select id="filter-tipo">
+              <option value="">Tutti i Tipi</option>
+              <option value="Email">Email</option>
+              <option value="Telefono">Telefono</option>
+              <option value="Documento">Documento</option>
+              <option value="Call">Call</option>
+              <option value="Task">Task</option>
+              <option value="Decisione">Decisione</option>
+            </select>
+      
+            <select id="filter-priorita">
+              <option value="">Tutte le Priorità</option>
+              <option value="UI">Urgente e Importante</option>
+              <option value="IN">Importante Non Urgente</option>
+              <option value="UN">Urgente Non Importante</option>
+              <option value="NN">Non Urgente Non Importante</option>
+            </select>
+      
+            {% if user.is_superuser %}
+            <select id="filter-utente">
+              <option value="">Tutti gli Utenti</option>
+              {% for utente in utenti %}
+              <option value="{{ utente.username }}">{{ utente.username }}</option>
+              {% endfor %}
+            </select>
+            {% endif %}
+          </div>
+        </div>
+      </div>
 
       <h2>Matrice delle Priorità </h2> 
       <div id="task-edit-id-display">{{task.task_id}}</div>
@@ -30,7 +72,7 @@
         {% csrf_token %}
         <input type="hidden" name="task_id" id="task_id" >
         <input maxlength="25" title ="Max 25 caratteri" type="text" name="descrizione" id="descrizione" placeholder="Descrizione attività" required>
-      
+        <textarea name="note" id="note" placeholder="Note (opzionale)" rows="3"></textarea>
         <select name="tipo" id="tipo" title ="Tipo di Task" required>
           <option value="Email">Email</option>
           <option value="Telefono">Telefono</option>
@@ -48,7 +90,7 @@
         </select>
         {% if user.is_superuser %}
         <select name="assegnato_a" id="assegnato_a">
-          <option value="" selected>Nessun Assegnatario</option>
+          <option value="" selected>Assegna a</option>
           {% for utente in utenti %}
           <option value="{{ utente.id }}">{{ utente.username }}</option>
           {% endfor %}
@@ -70,6 +112,10 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
+                  {% if task.note %}
+                    <p class="task-note">{{ task.note }}</p>
+                  {% endif %}
+
                   {% if task.modificato_da.username != task.creatore.username %}
                     <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
                   {% endif %}
@@ -97,6 +143,9 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
+                  {% if task.note %}
+                    <p class="task-note">{{ task.note }}</p>
+                  {% endif %}
                   {% if task.modificato_da.username %}
                     <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
                   {% endif %}
@@ -124,6 +173,9 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
+                  {% if task.note %}
+                    <p class="task-note">{{ task.note }}</p>
+                  {% endif %}
                   {% if task.modificato_da.username %}
                     <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
                   {% endif %}
@@ -151,6 +203,9 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
+                  {% if task.note %}
+                    <p class="task-note">{{ task.note }}</p>
+                  {% endif %}
                   {% if task.modificato_da.username %}
                     <p class = "task-info"><small>Modificata da {{ task.modificato_da.username }}</small></p>
                   {% endif %}
