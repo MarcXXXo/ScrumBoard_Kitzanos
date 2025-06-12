@@ -113,16 +113,7 @@ body {
   min-height: 0;
 }
 
-@media (max-width: 768px) {
-  .priority-grid {
-    grid-template-columns: 1fr;
-  }
-  .input-group{
-     display: flex;
-     flex-wrap: wrap;
-     gap: 10px;
-  }
-}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -181,7 +172,7 @@ h3{
   border: 1px solid #ccc;
   border-radius: 12px;
   padding: 0.8rem 1rem;
-  height: 140px;
+  height: 180px;
   width: 90%;
   max-width: 400px;
   overflow: hidden;
@@ -191,6 +182,8 @@ h3{
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
   margin: 0 auto 1rem auto;
 }
+
+
 
 .task-header{
   display: flex;
@@ -208,7 +201,7 @@ h3{
   font-size: 0.95rem;
   color: #222;
   line-height: 1.2;
-  max-height: 2.5em; /* massimo 2 righe */
+  max-height: 2.5em; 
   overflow: hidden;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
@@ -222,6 +215,11 @@ h3{
   overflow: hidden;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
+}
+
+.task-creator {
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .task-user {
@@ -248,8 +246,9 @@ h3{
   text-overflow: ellipsis;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end;
 }
+
 
 .task-details-complete{
   font-size: 0.70em;
@@ -303,8 +302,18 @@ h3{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /*flex-direction: column*/;
 }
+
+
+
+.task-type p{
+  flex-wrap: nowrap;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+  justify-content: flex-end;
+}
+
 
 .task-actions button {
   background: none;
@@ -315,11 +324,34 @@ h3{
   transition: color 0.2s ease;
 }
 
+
 .task-actions button:hover {
   color: #2979ff;
 }
 
 .completed-task-list{
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (min-width: 768px) and (max-width: 1100px) {
+  .completed-task-list{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .priority-grid {
+    grid-template-columns: 1fr;
+  }
+  .input-group{
+     display: flex;
+     flex-wrap: wrap;
+     gap: 10px;
+  }
+  .completed-task-list{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
 }

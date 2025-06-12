@@ -70,8 +70,8 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
-                  {% if task.modificato_da %}
-                    <p><small>Modificata da: {{ task.modificato_da.username }}</small></p>
+                  {% if task.modificato_da.username != task.creatore.username %}
+                    <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
                   {% endif %}
                   <p> {{ task.tipo }}</p>
                 </div>
@@ -97,8 +97,8 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
-                  {% if task.modificato_da %}
-                    <p><small>Modificata da: {{ task.modificato_da.username }}</small></p>
+                  {% if task.modificato_da.username %}
+                    <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
                   {% endif %}
                   <p> {{ task.tipo }}</p>
                 </div>
@@ -124,8 +124,8 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
-                  {% if task.modificato_da %}
-                    <p><small>Modificata da: {{ task.modificato_da.username }}</small></p>
+                  {% if task.modificato_da.username %}
+                    <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
                   {% endif %}
                   <p> {{ task.tipo }}</p>
                 </div>
@@ -151,8 +151,8 @@
               </div>
               <div class="task-details">
                 <div class="task-type">
-                  {% if task.modificato_da %}
-                    <p><small>Modificata da: {{ task.modificato_da.username }}</small></p>
+                  {% if task.modificato_da.username %}
+                    <p class = "task-info"><small>Modificata da {{ task.modificato_da.username }}</small></p>
                   {% endif %}
                   <p> {{ task.tipo }}</p>
                 </div>

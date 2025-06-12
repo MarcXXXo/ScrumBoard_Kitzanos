@@ -18,4 +18,11 @@ Implementate Task nella griglia
 
 Modifica Task aggiunta
 
-Completa task da rifinire
+Completa task aggiunta
+
+Elimina task aggiunta
+
+Controllo per non far eliminare task non proprietarie
+
+Modificato Layout di tutto
+

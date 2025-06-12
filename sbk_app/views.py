@@ -4,12 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from .models import Task
+from django.db.models import Q
 from django.views.decorators.http import require_POST
 
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def home(request):
+    user = request.user
     if request.method == 'POST':
         descrizione = request.POST.get('descrizione')
         tipo = request.POST.get('tipo')
@@ -17,7 +19,6 @@ def home(request):
         task_id = request.POST.get('task_id')
         assegnato_id = request.POST.get('assegnato_a')
         assegnato_user = User.objects.get(id=assegnato_id) if assegnato_id else None 
-        if(assegnato_user!= None): request.user = assegnato_user
 
         if task_id:
             # MODIFICA
@@ -26,6 +27,8 @@ def home(request):
             task.tipo = request.POST.get('tipo')
             task.priorita = request.POST.get('priorita')
             task.modificato_da = request.user
+            if(assegnato_user != None): task.creatore = assegnato_user #assegnata da coordinatore
+
             task.save()
             return redirect('home')
         
@@ -41,13 +44,30 @@ def home(request):
             )
         return redirect('home')
 
-    tasks_ui = Task.objects.filter(priorita='UI', completata=False)
-    tasks_in = Task.objects.filter(priorita='IN', completata=False)
-    tasks_un = Task.objects.filter(priorita='UN', completata=False)
-    tasks_nn = Task.objects.filter(priorita='NN', completata=False)
+    #tasks_ui = Task.objects.filter(priorita='UI', completata=False)
+    #tasks_in = Task.objects.filter(priorita='IN', completata=False)
+    #tasks_un = Task.objects.filter(priorita='UN', completata=False)
+    #tasks_nn = Task.objects.filter(priorita='NN', completata=False)
 
-    completate = Task.objects.filter(completata=True)
-    utenti = User.objects.all() if request.user.is_superuser else []
+    #completate = Task.objects.filter(completata=True)
+    #utenti = User.objects.all() if request.user.is_superuser else []
+    if user.is_superuser:
+        # Il coordinatore vede tutto
+        tasks_ui = Task.objects.filter(priorita='UI', completata=False)
+        tasks_in = Task.objects.filter(priorita='IN', completata=False)
+        tasks_un = Task.objects.filter(priorita='UN', completata=False)
+        tasks_nn = Task.objects.filter(priorita='NN', completata=False)
+        completate = Task.objects.filter(completata=True)
+        utenti = User.objects.all()
+    else:
+        # Utente normale: solo task proprie o assegnate
+        filtro = Q(creatore=user) | Q(assegnato_a=user)
+        tasks_ui = Task.objects.filter(filtro, priorita='UI', completata=False)
+        tasks_in = Task.objects.filter(filtro, priorita='IN', completata=False)
+        tasks_un = Task.objects.filter(filtro, priorita='UN', completata=False)
+        tasks_nn = Task.objects.filter(filtro, priorita='NN', completata=False)
+        completate = Task.objects.filter(filtro, completata=True)
+        utenti = None
 
     context = {
         'tasks_ui': tasks_ui,

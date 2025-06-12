@@ -24,14 +24,14 @@ Visualizzare task divise per stato (attive/completate) e priorità
 
 Modificare task (modal o pagina separata)
 
-Completare task (cambio stato)   ------ARRIVATO QUI, bisogna trovare modo per refresh o capire dove sgarra il frontend al cambio di tab della task
+Completare task (cambio stato)   
 
 Eliminare task
 
 3. Gestione permessi e visibilità
 Utente standard: vede solo task assegnate o create da sé
 
-Coordinatore/admin: vede tutte le task
+Coordinatore/admin: vede tutte le task ----fino a qui completamento
 
 Implementare controllo in backend (filtri query) e frontend
 
@@ -62,3 +62,15 @@ Filtro ricerca task
 Commenti o note sulle task
 
 Dashboard con statistiche (task completate, tempo medio, ecc.)
+
+
+
+
+------
+utente vede solo le sue
+
+filtri ricerca
+
+
+
+note sulla task
