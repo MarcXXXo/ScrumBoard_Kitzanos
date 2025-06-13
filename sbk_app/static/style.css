@@ -1,5 +1,6 @@
 @font-face {
   font-family: 'Montserrat';
+  font-weight: bold;
   src: url('/static/font/Montserrat-Thin.woff2') format('woff2');
 }
 * {
@@ -100,7 +101,7 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: bold;
 }
 
 .priority-grid {
@@ -196,7 +197,7 @@ h3{
 }
 
 .task-title{
-  font-weight: 700;
+  font-weight: bold;
   font-size: 0.95rem;
   color: #222;
   line-height: 1.2;
@@ -207,7 +208,7 @@ h3{
 }
 
 .task-creator {
-  font-weight: 400;
+  font-weight: bold;
   font-size: 0.95rem;
   color: #222;
   line-height: 1.2;
@@ -222,7 +223,7 @@ h3{
 }
 
 .task-user {
-  font-weight: 500;
+  font-weight: bold;
   font-size: 0.9rem;
   color: #555;
   white-space: nowrap;
@@ -248,7 +249,7 @@ h3{
   align-items: flex-end;
 }
 .task-note{
-  font-weight: 500;
+  font-weight: bold;
   font-size: 0.9rem;
   white-space: normal; 
   word-wrap: break-word;
@@ -262,6 +263,7 @@ h3{
   border-radius: 8px;
   font-family: inherit;
   box-sizing: border-box;
+  font-weight: bold;
  }
 .task-details-complete{
   font-size: 0.70em;
@@ -418,7 +420,7 @@ h3{
 .dropdown-content select,
 .dropdown-content input {
   display: block;
-  font-weight: 500;
+  font-weight: bold;
   margin-bottom: 0.8rem;
   width: 100%;
 }
