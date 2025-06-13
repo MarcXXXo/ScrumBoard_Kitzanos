@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Aggiunta attività
   addButton.addEventListener('click', () => {
     const desc = descriptionInput.value.trim();
-    if (!desc) {
+    /*if (!desc) {
       alert('Inserisci la descrizione dell\'attività');
       return;
-    }
+    }*/
 
     const priority = categorySelect.value;
     const type = typeSelect.value;
@@ -42,4 +42,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     descriptionInput.value = '';
   });
+  
 });

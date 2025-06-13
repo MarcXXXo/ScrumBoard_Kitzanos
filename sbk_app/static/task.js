@@ -110,11 +110,40 @@ function getCookie(name) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("filterToggle");
+  const toggle_comp = document.getElementById("filterToggle_comp");
+  const menu = document.getElementById("filterMenu");
+  const menu_comp = document.getElementById("filterMenu_comp");
+
+  toggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("show");
+    const expanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", (!expanded).toString());
+    const expanded_comp = toggle_comp.getAttribute("aria-expanded") === "true";
+    toggle_comp.setAttribute("aria-expanded", (!expanded_comp).toString());
+  });
+
+  // Chiude il menu se clicchi fuori
+  document.addEventListener("click", (e) => {
+    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+      menu.classList.remove("show");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+    if (!menu_comp.contains(e.target) && !toggle_comp.contains(e.target)) {
+      menu_comp.classList.remove("show");
+      toggle_comp.setAttribute("aria-expanded", "false");
+    }
+  });
   const searchInput = document.getElementById("task-search");
   const tipoFilter = document.getElementById("filter-tipo");
   const prioritaFilter = document.getElementById("filter-priorita");
   const utenteFilter = document.getElementById("filter-utente"); // opzionale
   //console.log("Filtro attivo:", { descrizione, tipo, priorita });
+  const searchInput_comp = document.getElementById("task-search_comp");
+  const tipoFilter_comp = document.getElementById("filter-tipo_comp");
+  const prioritaFilter_comp = document.getElementById("filter-priorita_comp");
+  const utenteFilter_comp = document.getElementById("filter-utente_comp");
 
   const taskCards = document.querySelectorAll(".task-card");
 
@@ -123,6 +152,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const tipo = tipoFilter.value;
     const priorita = prioritaFilter.value;
     const utente = utenteFilter?.value || "";
+    const search_comp = searchInput_comp.value.toLowerCase();
+    const tipo_comp = tipoFilter_comp.value;
+    const priorita_comp = prioritaFilter_comp.value;
+    const utente_comp = utenteFilter_comp?.value || "";
 
     taskCards.forEach(card => {
       const descrizione = card.querySelector(".task-title")?.innerText.toLowerCase() || "";
@@ -134,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const matchSearch = descrizione.includes(search) || tipoText.toLowerCase().includes(search) || creatore.toLowerCase().includes(search);
       const matchTipo = tipo === "" || tipoText.includes(tipo);
-      const  matchPriorita = priorita === "" || hasPriorita;
+      const matchPriorita = priorita === "" || hasPriorita;
       const matchUtente = utente === "" || creatore === utente;
 
       const visible = matchSearch && matchTipo && matchPriorita && matchUtente;
@@ -156,24 +189,12 @@ document.addEventListener("DOMContentLoaded", () => {
   tipoFilter.addEventListener("change", filtraTask);
   prioritaFilter.addEventListener("change", filtraTask);
   if (utenteFilter) utenteFilter.addEventListener("change", filtraTask);
+  searchInput_comp.addEventListener("input", filtraTask);
+  tipoFilter_comp.addEventListener("change", filtraTask);
+  prioritaFilter_comp.addEventListener("change", filtraTask);
+  if (utenteFilter) utenteFilter_comp.addEventListener("change", filtraTask);
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("filterToggle");
-  const menu = document.getElementById("filterMenu");
 
-  toggle.addEventListener("click", (e) => {
-    e.stopPropagation();
-    menu.classList.toggle("show");
-    const expanded = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", (!expanded).toString());
-  });
 
-  // Chiude il menu se clicchi fuori
-  document.addEventListener("click", (e) => {
-    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
-      menu.classList.remove("show");
-      toggle.setAttribute("aria-expanded", "false");
-    }
-  });
-});
+

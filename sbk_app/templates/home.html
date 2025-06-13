@@ -23,19 +23,21 @@
     <!-- Sezione ATTIVE -->
     <div class="card tab-content active" id="attive">
       <div class="task-filter-bar">
-        <!-- Campo di ricerca sempre visibile -->
-        <input type="text" id="task-search" class="task-search" placeholder="Cerca per descrizione, tipo o utente...">
-      
+
+        <h2>Matrice delle Priorità </h2> 
+
         <!-- Wrapper dropdown -->
         <div class="dropdown">
+          
           <!-- Icona per mostrare/nascondere il menu -->
-          <button id="filterToggle" class="dropbtn" aria-haspopup="true" aria-expanded="false">
+          <button id="filterToggle_comp" class="dropbtn" aria-haspopup="true" aria-expanded="false">
             <img src="{% static 'icone/filter.svg' %}" alt="Filtri" style="width: 24px; height: 24px;">
           </button>
       
           <!-- Menu a comparsa -->
-          <div id="filterMenu" class="dropdown-content" role="menu" aria-labelledby="filterToggle">
-            <select id="filter-tipo">
+          <div id="filterMenu_comp" class="dropdown-content" role="menu" aria-labelledby="filterToggle">
+            <input type="text" id="task-search_comp" class="task-search" placeholder="Cerca per testo">
+            <select id="filter-tipo_comp">
               <option value="">Tutti i Tipi</option>
               <option value="Email">Email</option>
               <option value="Telefono">Telefono</option>
@@ -45,7 +47,7 @@
               <option value="Decisione">Decisione</option>
             </select>
       
-            <select id="filter-priorita">
+            <select id="filter-priorita_comp">
               <option value="">Tutte le Priorità</option>
               <option value="UI">Urgente e Importante</option>
               <option value="IN">Importante Non Urgente</option>
@@ -54,7 +56,7 @@
             </select>
       
             {% if user.is_superuser %}
-            <select id="filter-utente">
+            <select id="filter-utente_comp">
               <option value="">Tutti gli Utenti</option>
               {% for utente in utenti %}
               <option value="{{ utente.username }}">{{ utente.username }}</option>
@@ -65,13 +67,13 @@
         </div>
       </div>
 
-      <h2>Matrice delle Priorità </h2> 
+      <!-- <h2>Matrice delle Priorità </h2> -->
       <div id="task-edit-id-display">{{task.task_id}}</div>
 
       <form method="POST" class="input-group" id ="input-group">
         {% csrf_token %}
         <input type="hidden" name="task_id" id="task_id" >
-        <input maxlength="25" title ="Max 25 caratteri" type="text" name="descrizione" id="descrizione" placeholder="Descrizione attività" required>
+        <input maxlength="25" title ="Max 25 caratteri" type="text" name="descrizione" id="descrizione" placeholder="Descrizione attività">
         <textarea name="note" id="note" placeholder="Note (opzionale)" rows="3"></textarea>
         <select name="tipo" id="tipo" title ="Tipo di Task" required>
           <option value="Email">Email</option>
@@ -116,7 +118,7 @@
                     <p class="task-note">{{ task.note }}</p>
                   {% endif %}
 
-                  {% if task.modificato_da.username != task.creatore.username %}
+                  {% if task.modificato_da.username and task.modificato_da.username != task.creatore.username %}
                     <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
                   {% endif %}
                   <p> {{ task.tipo }}</p>
@@ -228,7 +230,51 @@
 
     <!-- Sezione COMPLETATE -->
     <div class="card tab-content" id="completate" >
-      <h2>Attività Completate</h2>
+      <div class="task-filter-bar">
+
+        <h2>Attività Completate </h2> 
+
+        <!-- Wrapper dropdown -->
+        <div class="dropdown">
+          
+          <!-- Icona per mostrare/nascondere il menu -->
+          <button id="filterToggle" class="dropbtn" aria-haspopup="true" aria-expanded="false">
+            <img src="{% static 'icone/filter.svg' %}" alt="Filtri" style="width: 24px; height: 24px;">
+          </button>
+      
+          <!-- Menu a comparsa -->
+          <div id="filterMenu" class="dropdown-content" role="menu" aria-labelledby="filterToggle">
+            <input type="text" id="task-search" class="task-search" placeholder="Cerca per testo">
+            <select id="filter-tipo">
+              <option value="">Tutti i Tipi</option>
+              <option value="Email">Email</option>
+              <option value="Telefono">Telefono</option>
+              <option value="Documento">Documento</option>
+              <option value="Call">Call</option>
+              <option value="Task">Task</option>
+              <option value="Decisione">Decisione</option>
+            </select>
+      
+            <select id="filter-priorita">
+              <option value="">Tutte le Priorità</option>
+              <option value="UI">Urgente e Importante</option>
+              <option value="IN">Importante Non Urgente</option>
+              <option value="UN">Urgente Non Importante</option>
+              <option value="NN">Non Urgente Non Importante</option>
+            </select>
+      
+            {% if user.is_superuser %}
+            <select id="filter-utente">
+              <option value="">Tutti gli Utenti</option>
+              {% for utente in utenti %}
+              <option value="{{ utente.username }}">{{ utente.username }}</option>
+              {% endfor %}
+            </select>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      
 
       <div class="completed-task-list">
         {% if completate %}
