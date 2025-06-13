@@ -75,12 +75,13 @@ body {
   flex-wrap: wrap; 
 }
 
-.input-group input{
+.input-group input {
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 14px;;
+  font-size: 14px;
 }
+
 .input-group select {
   padding: 8px 12px;
   border-radius: 8px;
@@ -251,8 +252,8 @@ h3{
  #note{
   resize: none;                /* Disabilita il trascinamento */
   height: 2.5rem;              /* Altezza simile a un input */
-  padding: 0.5rem;
-  font-size: 1rem;
+  padding: 11px 8px;
+  font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-family: inherit;
