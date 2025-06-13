@@ -111,88 +111,166 @@ function getCookie(name) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("filterToggle");
-  const toggle_comp = document.getElementById("filterToggle_comp");
   const menu = document.getElementById("filterMenu");
-  const menu_comp = document.getElementById("filterMenu_comp");
+
 
   toggle.addEventListener("click", (e) => {
     e.stopPropagation();
     menu.classList.toggle("show");
     const expanded = toggle.getAttribute("aria-expanded") === "true";
     toggle.setAttribute("aria-expanded", (!expanded).toString());
-    const expanded_comp = toggle_comp.getAttribute("aria-expanded") === "true";
-    toggle_comp.setAttribute("aria-expanded", (!expanded_comp).toString());
   });
 
-  // Chiude il menu se clicchi fuori
-  document.addEventListener("click", (e) => {
-    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
-      menu.classList.remove("show");
-      toggle.setAttribute("aria-expanded", "false");
-    }
-    if (!menu_comp.contains(e.target) && !toggle_comp.contains(e.target)) {
-      menu_comp.classList.remove("show");
-      toggle_comp.setAttribute("aria-expanded", "false");
-    }
-  });
+
+
+
   const searchInput = document.getElementById("task-search");
   const tipoFilter = document.getElementById("filter-tipo");
   const prioritaFilter = document.getElementById("filter-priorita");
   const utenteFilter = document.getElementById("filter-utente"); // opzionale
   //console.log("Filtro attivo:", { descrizione, tipo, priorita });
+  // Chiude il menu se clicchi fuori
+  document.addEventListener("click", (e) => {
+    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+      menu.classList.remove("show");
+      searchInput.value = '';
+      tipoFilter.value = '';
+      prioritaFilter.value = '';
+      searchInput.dispatchEvent(new Event('change'));
+      tipoFilter.dispatchEvent(new Event('change'));
+      prioritaFilter.dispatchEvent(new Event('change'));
+      if (utenteFilter) {
+        utenteFilter.value = '';
+        utenteFilter.dispatchEvent(new Event('change'));
+      }
+      toggle.setAttribute("aria-expanded", "false");
+    }
+
+
+    const taskCards = document.querySelectorAll(".task-card");
+
+    function filtraTask() {
+      const search = searchInput.value.toLowerCase();
+      const tipo = tipoFilter.value;
+      const priorita = prioritaFilter.value;
+      const utente = utenteFilter?.value || "";
+
+      taskCards.forEach(card => {
+        const descrizione = card.querySelector(".task-title")?.innerText.toLowerCase() || "";
+        const tipoText = card.querySelector(".task-type")?.innerText || "";
+        const prioritaContainer = card.closest(".priority");
+        const hasPriorita = prioritaContainer?.classList?.contains(prioritaToClass(priorita));
+
+        const creatore = card.querySelector(".task-creator")?.innerText || "";
+
+        const matchSearch = descrizione.includes(search) || tipoText.toLowerCase().includes(search) || creatore.toLowerCase().includes(search);
+        const matchTipo = tipo === "" || tipoText.includes(tipo);
+        const matchPriorita = priorita === "" || hasPriorita;
+        const matchUtente = utente === "" || creatore === utente;
+
+
+        const visible = matchSearch && matchTipo && matchPriorita && matchUtente;
+        //console.log({ descrizione, tipo, creatore, visible });
+        card.style.display = visible ? "block" : "none";
+      });
+    }
+
+    function prioritaToClass(code) {
+      return {
+        UI: "urgent-important",
+        IN: "important-not-urgent",
+        UN: "urgent-not-important",
+        NN: "not-urgent-not-important"
+      }[code] || "";
+    }
+
+    searchInput.addEventListener("input", filtraTask);
+    tipoFilter.addEventListener("change", filtraTask);
+    prioritaFilter.addEventListener("change", filtraTask);
+    if (utenteFilter) utenteFilter.addEventListener("change", filtraTask);
+
+  });
+});
+//filtri completate
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle_comp = document.getElementById("filterToggle_comp");
+  const menu_comp = document.getElementById("filterMenu_comp");
+
+  toggle_comp.addEventListener("click", (e_comp) => {
+    e_comp.stopPropagation();
+    menu_comp.classList.toggle("show");
+    const expanded_comp = toggle_comp.getAttribute("aria-expanded") === "true";
+    toggle_comp.setAttribute("aria-expanded", (!expanded_comp).toString());
+  });
+
+
+
+
   const searchInput_comp = document.getElementById("task-search_comp");
   const tipoFilter_comp = document.getElementById("filter-tipo_comp");
   const prioritaFilter_comp = document.getElementById("filter-priorita_comp");
-  const utenteFilter_comp = document.getElementById("filter-utente_comp");
+  const utenteFilter_comp = document.getElementById("filter-utente_comp"); // opzionale
+  //console.log("Filtro attivo:", { descrizione, tipo, priorita });
+  // Chiude il menu se clicchi fuori
+  document.addEventListener("click", (e_comp) => {
+    if (!menu_comp.contains(e_comp.target) && !toggle_comp.contains(e_comp.target)) {
+      menu_comp.classList.remove("show");
+      searchInput_comp.value = '';
+      tipoFilter_comp.value = '';
+      prioritaFilter_comp.value = '';
+      searchInput_comp.dispatchEvent(new Event('change'));
+      tipoFilter_comp.dispatchEvent(new Event('change'));
+      prioritaFilter_comp.dispatchEvent(new Event('change'));
+      if (utenteFilter_comp) {
+        utenteFilter_comp.value = '';
+        utenteFilter_comp.dispatchEvent(new Event('change'));
+      }
+      toggle_comp.setAttribute("aria-expanded", "false");
+    }
 
-  const taskCards = document.querySelectorAll(".task-card");
+    const taskCards_comp = document.querySelectorAll(".task-card");
 
-  function filtraTask() {
-    const search = searchInput.value.toLowerCase();
-    const tipo = tipoFilter.value;
-    const priorita = prioritaFilter.value;
-    const utente = utenteFilter?.value || "";
-    const search_comp = searchInput_comp.value.toLowerCase();
-    const tipo_comp = tipoFilter_comp.value;
-    const priorita_comp = prioritaFilter_comp.value;
-    const utente_comp = utenteFilter_comp?.value || "";
+    function filtraTask() {
+      const search_comp = searchInput_comp.value.toLowerCase();
+      const tipo_comp = tipoFilter_comp.value;
+      const priorita_comp = prioritaFilter_comp.value;
+      const utente_comp = utenteFilter_comp?.value || "";
 
-    taskCards.forEach(card => {
-      const descrizione = card.querySelector(".task-title")?.innerText.toLowerCase() || "";
-      const tipoText = card.querySelector(".task-type")?.innerText || "";
-      const prioritaContainer = card.closest(".priority");
-      const hasPriorita = prioritaContainer?.classList?.contains(prioritaToClass(priorita));
+      taskCards_comp.forEach(card => {
+        const descrizione_comp = card.querySelector(".task-title")?.innerText.toLowerCase() || "";
+        const tipoText_comp = card.querySelector(".task-type")?.innerText || "";
+        const prioritaContainer_comp = card.closest(".priority");
+        const hasPriorita_comp = prioritaContainer_comp?.classList?.contains(prioritaToClass(priorita_comp));
 
-      const creatore = card.querySelector(".task-creator")?.innerText || "";
+        const creatore = card.querySelector(".task-creator")?.innerText || "";
 
-      const matchSearch = descrizione.includes(search) || tipoText.toLowerCase().includes(search) || creatore.toLowerCase().includes(search);
-      const matchTipo = tipo === "" || tipoText.includes(tipo);
-      const matchPriorita = priorita === "" || hasPriorita;
-      const matchUtente = utente === "" || creatore === utente;
+        const matchSearch_comp = descrizione_comp.includes(search_comp) || tipoText_comp.toLowerCase().includes(search_comp) || creatore.toLowerCase().includes(search_comp);
+        const matchTipo_comp = tipo_comp === "" || tipoText_comp.includes(tipo_comp);
+        const matchPriorita_comp = priorita_comp === "" || hasPriorita_comp;
+        const matchUtente_comp = utente_comp === "" || creatore === utente_comp;
 
-      const visible = matchSearch && matchTipo && matchPriorita && matchUtente;
-      //console.log({ descrizione, tipo, creatore, visible });
-      card.style.display = visible ? "block" : "none";
-    });
-  }
 
-  function prioritaToClass(code) {
-    return {
-      UI: "urgent-important",
-      IN: "important-not-urgent",
-      UN: "urgent-not-important",
-      NN: "not-urgent-not-important"
-    }[code] || "";
-  }
+        const visible_comp = matchSearch_comp && matchTipo_comp && matchPriorita_comp && matchUtente_comp;
+        //console.log({ descrizione, tipo, creatore, visible });
+        card.style.display = visible_comp ? "block" : "none";
+      });
+    }
 
-  searchInput.addEventListener("input", filtraTask);
-  tipoFilter.addEventListener("change", filtraTask);
-  prioritaFilter.addEventListener("change", filtraTask);
-  if (utenteFilter) utenteFilter.addEventListener("change", filtraTask);
-  searchInput_comp.addEventListener("input", filtraTask);
-  tipoFilter_comp.addEventListener("change", filtraTask);
-  prioritaFilter_comp.addEventListener("change", filtraTask);
-  if (utenteFilter) utenteFilter_comp.addEventListener("change", filtraTask);
+    function prioritaToClass(code) {
+      return {
+        UI: "urgent-important",
+        IN: "important-not-urgent",
+        UN: "urgent-not-important",
+        NN: "not-urgent-not-important"
+      }[code] || "";
+    }
+
+    searchInput_comp.addEventListener("input", filtraTask);
+    tipoFilter_comp.addEventListener("change", filtraTask);
+    prioritaFilter_comp.addEventListener("change", filtraTask);
+    if (utenteFilter_comp) utenteFilter_comp.addEventListener("change", filtraTask);
+
+  });
 });
 
 

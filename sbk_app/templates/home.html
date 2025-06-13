@@ -30,14 +30,14 @@
         <div class="dropdown">
           
           <!-- Icona per mostrare/nascondere il menu -->
-          <button id="filterToggle_comp" class="dropbtn" aria-haspopup="true" aria-expanded="false">
+          <button id="filterToggle" class="dropbtn" aria-haspopup="true" aria-expanded="false">
             <img src="{% static 'icone/filter.svg' %}" alt="Filtri" style="width: 24px; height: 24px;">
           </button>
       
           <!-- Menu a comparsa -->
-          <div id="filterMenu_comp" class="dropdown-content" role="menu" aria-labelledby="filterToggle">
-            <input type="text" id="task-search_comp" class="task-search" placeholder="Cerca per testo">
-            <select id="filter-tipo_comp">
+          <div id="filterMenu" class="dropdown-content" role="menu" aria-labelledby="filterToggle">
+            <input type="text" id="task-search" class="task-search" placeholder="Cerca per testo">
+            <select id="filter-tipo">
               <option value="">Tutti i Tipi</option>
               <option value="Email">Email</option>
               <option value="Telefono">Telefono</option>
@@ -47,7 +47,7 @@
               <option value="Decisione">Decisione</option>
             </select>
       
-            <select id="filter-priorita_comp">
+            <select id="filter-priorita">
               <option value="">Tutte le Priorità</option>
               <option value="UI">Urgente e Importante</option>
               <option value="IN">Importante Non Urgente</option>
@@ -56,7 +56,7 @@
             </select>
       
             {% if user.is_superuser %}
-            <select id="filter-utente_comp">
+            <select id="filter-utente">
               <option value="">Tutti gli Utenti</option>
               {% for utente in utenti %}
               <option value="{{ utente.username }}">{{ utente.username }}</option>
@@ -238,14 +238,14 @@
         <div class="dropdown">
           
           <!-- Icona per mostrare/nascondere il menu -->
-          <button id="filterToggle" class="dropbtn" aria-haspopup="true" aria-expanded="false">
+          <button id="filterToggle_comp" class="dropbtn" aria-haspopup="true" aria-expanded="false">
             <img src="{% static 'icone/filter.svg' %}" alt="Filtri" style="width: 24px; height: 24px;">
           </button>
       
           <!-- Menu a comparsa -->
-          <div id="filterMenu" class="dropdown-content" role="menu" aria-labelledby="filterToggle">
-            <input type="text" id="task-search" class="task-search" placeholder="Cerca per testo">
-            <select id="filter-tipo">
+          <div id="filterMenu_comp" class="dropdown-content" role="menu" aria-labelledby="filterToggle">
+            <input type="text" id="task-search_comp" class="task-search" placeholder="Cerca per testo">
+            <select id="filter-tipo_comp">
               <option value="">Tutti i Tipi</option>
               <option value="Email">Email</option>
               <option value="Telefono">Telefono</option>
@@ -255,7 +255,7 @@
               <option value="Decisione">Decisione</option>
             </select>
       
-            <select id="filter-priorita">
+            <select id="filter-priorita_comp">
               <option value="">Tutte le Priorità</option>
               <option value="UI">Urgente e Importante</option>
               <option value="IN">Importante Non Urgente</option>
@@ -264,7 +264,7 @@
             </select>
       
             {% if user.is_superuser %}
-            <select id="filter-utente">
+            <select id="filter-utente_comp">
               <option value="">Tutti gli Utenti</option>
               {% for utente in utenti %}
               <option value="{{ utente.username }}">{{ utente.username }}</option>
