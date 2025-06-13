@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-)#--s@@6wv#wtc2z0very1=&rx7=qgn)z)i^27%kci+y+_9(p3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['scrumboard-k.onrender.com']
 
 
 # Application definition
