@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -88,7 +88,7 @@ DATABASES = {
     }
 }
 
-#DATABASES["default"] = dj_database_url.parse("postgresql://sbk_app_user:vPYCsxvOXpjSi3fkehdEOjiRLeI26d6G@dpg-d15v9uodl3ps7387nu7g-a.frankfurt-postgres.render.com/sbk_app")
+DATABASES["default"] = dj_database_url.parse("postgresql://sbk_app_user:vPYCsxvOXpjSi3fkehdEOjiRLeI26d6G@dpg-d15v9uodl3ps7387nu7g-a.frankfurt-postgres.render.com/sbk_app")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
