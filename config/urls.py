@@ -1,28 +1,25 @@
 """
-URL configuration for ScrumBoard_Kitzanos project.
+Configurazione URL per il progetto ScrumBoard_Kitzanos.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+Includere un altro URLconf
+    1. Importa la funzione include(): from django.urls import include, path
+    2. Aggiungi un URL a urlpatterns: path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 
 urlpatterns = [
+    # URL per l'admin di Django
     path('admin/', admin.site.urls),
-    path('home/',include('sbk_app.urls')),
+
+    # Includi le URL dell'app sbk_app
+    path('home/', include('sbk_app.urls')),
+
+    # Includi le URL dell'app accounts
     path('accounts/', include('accounts.urls')),
 
-    # redirect dalla root a /home/
+    # Reindirizza dalla root a /home/
     path('', lambda request: redirect('home', permanent=False)), 
 ]
