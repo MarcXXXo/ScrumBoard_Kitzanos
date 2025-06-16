@@ -6,7 +6,7 @@ Il progetto è organizzato in modo modulare per facilitare manutenzione, scalabi
 
   1. Cartella config
 
-    - settings.py: impostazioni principali del progetto Django, come database, middleware, app     installate, static files, e sicurezza.
+    - settings.py: impostazioni principali del progetto Django, come database, middleware, app installate, static files, e sicurezza.
 
     - urls.py: file principale per il routing URL, include i path di app sbk_app e accounts.
 
@@ -14,7 +14,7 @@ Il progetto è organizzato in modo modulare per facilitare manutenzione, scalabi
 
   2. Cartella accounts
 
-    - forms.py: definizione di un form personalizzato di registrazionem CustomUser CreationForm con campo aggiuntivo is_coordinator.
+    - forms.py: definizione di un form personalizzato di registrazione CustomUserCreationForm con campo aggiuntivo is_coordinator.
 
     - urls.py: definizione delle rotte legate all'autenticazione (login, logout, registrazione).
 
@@ -26,7 +26,7 @@ Il progetto è organizzato in modo modulare per facilitare manutenzione, scalabi
 
     - urls.py: definizione delle rotte per la home page, completamento e cancellazione task.
 
-    - views.py: logica backend per la visualizzazione, creazione, modifica, completamento e eliminazione dei task. Include filtri basati sui ruoli utenti (coordinatori e utenti normali).
+    - views.py: logica backend per la visualizzazione, creazione, modifica, completamento e eliminazione dei task. Include filtri basati sui ruoli utenti (coordinatori e                     utenti normali).
 
   4. Cartella static
 
@@ -43,20 +43,24 @@ Il progetto è organizzato in modo modulare per facilitare manutenzione, scalabi
   5. Cartella templates
 
     - accounts/login.html: template per il login.
+    
     - accounts/register.html: template per la registrazione.
+    
     - home.html: template principale per la visualizzazione e interazione con i task.
 
   6. Altri file
 
     - db.sqlite3: database di sviluppo SQLite.
+    
     - manage.py: script per la gestione e il comando CLI di Django.
 
 -- Come è stato strutturato il progetto
 
   - Ho utilizzato Django per un backend solido e scalabile, implementando autenticazione modelli relazionali e CRUD completo sui task.
-  - Il frontend usa HTML5, CSS3 con variabili, layout responsive e JavaScript modulare per gestire
-    le varie interazioni nelle pagine.
-    - Le funzionalità chiave includono:
+  
+  - Il frontend usa HTML5, CSS3 con variabili, layout responsive e JavaScript modulare per gestire le varie interazioni nelle pagine.
+    
+  - Le funzionalità chiave includono:
       - Gestione ruoli utenti (coordinatore/admin e utente normale).
       - Completezza di moduli con validazioni e feedback utenti.
       - Filtri avanzati dinamici per tipo, priorità, utente e ricerca testuale.
@@ -68,7 +72,7 @@ Il progetto è organizzato in modo modulare per facilitare manutenzione, scalabi
 1. Clona il repository:  
    `git clone https://github.com/MarcXXXo/ScrumBoard_Kitzanos.git`
 
-2. Crea un ambiente virtuale (consigliato):  
+2. Crea un ambiente virtuale (consigliato ma opzionale):  
    `python -m venv venv`  
    `source venv/bin/activate` (Linux/macOS)  
    `venv\Scripts\activate` (Windows)
@@ -84,12 +88,13 @@ Il progetto è organizzato in modo modulare per facilitare manutenzione, scalabi
    `python manage.py runserver`
 
 6. Accedi all'app in browser:  
-   [http://localhost:8000/](http://localhost:8000/)
+   [http://127.0.0.1:8000/]
+   (http://127.0.0.1:8000/)
 
 -- Considerazioni finali
 
-Questo progetto integra backend e frontend per fornire una piattaforma di task management.  
-Il codice è stato organizzato per facilitare future estensioni, ottimizzazioni e refactoring.
+    Questo progetto integra backend e frontend per fornire una piattaforma di task management.  
+    Il codice è stato organizzato per facilitare future estensioni, ottimizzazioni e refactoring.
 
 Creato da Marco Livesu 
 marcolivesu1@gmail.com
