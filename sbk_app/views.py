@@ -1,3 +1,4 @@
+import json
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
@@ -109,3 +110,20 @@ def elimina_task(request, task_id):
 
     except Task.DoesNotExist:
         return JsonResponse({"success": False, "error": "Task non trovata"}, status=404)
+
+
+@require_POST
+def update_priority(request):
+    try:
+        data = json.loads(request.body)
+        task_id = data.get('task_id')
+        priorita = data.get('priorita')
+        task = Task.objects.get(id=task_id)
+        # Opzionale: controlla se l'utente ha i permessi per modificare la task
+        task.priorita = priorita
+        task.save()
+        return JsonResponse({'success': True})
+    except Task.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Task non trovata'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})

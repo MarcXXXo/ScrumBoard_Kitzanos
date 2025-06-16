@@ -68,7 +68,7 @@
       </div>
 
       <!-- <h2>Matrice delle Priorità </h2> -->
-      <div id="task-edit-id-display">{{task.task_id}}</div>
+      <div id="task-edit-id-display">{{task.id}}</div>
 
       <form method="POST" class="input-group" id ="input-group">
         {% csrf_token %}
@@ -104,71 +104,108 @@
 
       <div class="priority-grid">
 
-        <div class="priority urgent-important">
+        <div class="priority urgent-important" data-priority-code="UI">
           <h3>Urgente e Importante</h3>
-          {% for task in tasks_ui %}
-            <div class="task-card" >
-              <div class="task-header">
-                <div class="task-title">{{ task.descrizione }}</div>
-                <div class="task-creator">{{ task.creatore.username }}</div>
-              </div>
-              <div class="task-details">
-                <div class="task-type">
-                  {% if task.note %}
-                    <p class="task-note">{{ task.note }}</p>
-                  {% endif %}
+          <div class="task-list">
+            {% for task in tasks_ui %}
+              <div class="task-card" data-task-id = {{task.id}} >
+                <div class="task-header">
+                  <div class="task-title">{{ task.descrizione }}</div>
+                  <div class="task-creator">{{ task.creatore.username }}</div>
+                </div>
+                <div class="task-details">
+                  <div class="task-type">
+                    {% if task.note %}
+                      <p class="task-note">{{ task.note }}</p>
+                    {% endif %}
 
-                  {% if task.modificato_da and task.modificato_da.username != task.creatore.username %}
-                    <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
-                  {% endif %}
-                  <p> {{ task.tipo }}</p>
-                </div>
-                <div class="task-actions">
-                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/></button>
-                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"> <img src="{% static 'icone/check.svg' %}"/></button>
-                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"> <img src="{% static 'icone/trash.svg' %}"/></button>
+                    {% if task.modificato_da and task.modificato_da.username != task.creatore.username %}
+                      <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
+                    {% endif %}
+                    <p> {{ task.tipo }}</p>
+                  </div>
+                  <div class="task-actions">
+                    <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/></button>
+                    <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"> <img src="{% static 'icone/check.svg' %}"/></button>
+                    <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"> <img src="{% static 'icone/trash.svg' %}"/></button>
+                  </div>
                 </div>
               </div>
-            </div>
-          {% empty %}
-            <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
-          {% endfor %}
+            {% empty %}
+              <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
+            {% endfor %}
+          </div>
         </div>
 
-        <div class="priority important-not-urgent">
+        <div class="priority important-not-urgent" data-priority-code="IN">
           <h3>Importante Non Urgente</h3>
-          {% for task in tasks_in %}
-            <div class="task-card">
-              <div class="task-header">
-                <div class="task-title">{{ task.descrizione }}</div>
-                <div class="task-creator">{{ task.creatore.username }}</div>
-              </div>
-              <div class="task-details">
-                <div class="task-type">
-                  {% if task.note %}
-                    <p class="task-note">{{ task.note }}</p>
-                  {% endif %}
-                  {% if task.modificato_da.username %}
-                    <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
-                  {% endif %}
-                  <p> {{ task.tipo }}</p>
+          <div class="task-list">
+            {% for task in tasks_in %}
+              <div class="task-card" data-task-id = {{task.id}}>
+                <div class="task-header">
+                  <div class="task-title">{{ task.descrizione }}</div>
+                  <div class="task-creator">{{ task.creatore.username }}</div>
                 </div>
-                <div class="task-actions">
-                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/></button>
-                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"> <img src="{% static 'icone/check.svg' %}"/></button>
-                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"> <img src="{% static 'icone/trash.svg' %}"/></button>
+                <div class="task-details">
+                  <div class="task-type">
+                    {% if task.note %}
+                      <p class="task-note">{{ task.note }}</p>
+                    {% endif %}
+                    {% if task.modificato_da.username %}
+                      <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
+                    {% endif %}
+                    <p> {{ task.tipo }}</p>
+                  </div>
+                  <div class="task-actions">
+                    <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/></button>
+                    <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"> <img src="{% static 'icone/check.svg' %}"/></button>
+                    <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"> <img src="{% static 'icone/trash.svg' %}"/></button>
+                  </div>
                 </div>
               </div>
-            </div>
-          {% empty %}
-            <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
-          {% endfor %}
+            {% empty %}
+              <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
+            {% endfor %}
+          </div>
         </div>
 
-        <div class="priority urgent-not-important">
+        <div class="priority urgent-not-important" data-priority-code="UN">
           <h3>Urgente Non Importante</h3>
-          {% for task in tasks_un %}
-            <div class="task-card">
+          <div class="task-list">
+            {% for task in tasks_un %}
+              <div class="task-card" data-task-id = {{task.id}}>
+                <div class="task-header">
+                  <div class="task-title">{{ task.descrizione }}</div>
+                  <div class="task-creator">{{ task.creatore.username }}</div>
+                </div>
+                <div class="task-details">
+                  <div class="task-type">
+                    {% if task.note %}
+                      <p class="task-note">{{ task.note }}</p>
+                    {% endif %}
+                    {% if task.modificato_da.username %}
+                      <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
+                    {% endif %}
+                    <p> {{ task.tipo }}</p>
+                  </div>
+                  <div class="task-actions">
+                    <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/></button>
+                    <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><img src="{% static 'icone/check.svg' %}"/></button>
+                    <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"><img src="{% static 'icone/trash.svg' %}"/></button>
+                  </div>
+                </div>
+              </div>
+            {% empty %}
+            <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="priority not-urgent-not-important" data-priority-code="NN">
+          <h3>Non Urgente Non Importante</h3>
+          <div class="task-list">
+            {% for task in tasks_nn %}
+            <div class="task-card" data-task-id = {{task.id}}>
               <div class="task-header">
                 <div class="task-title">{{ task.descrizione }}</div>
                 <div class="task-creator">{{ task.creatore.username }}</div>
@@ -176,53 +213,27 @@
               <div class="task-details">
                 <div class="task-type">
                   {% if task.note %}
-                    <p class="task-note">{{ task.note }}</p>
+                  <p class="task-note">{{ task.note }}</p>
                   {% endif %}
                   {% if task.modificato_da.username %}
-                    <p><small>Modificata da {{ task.modificato_da.username }}</small></p>
+                  <p class="task-info"><small>Modificata da {{ task.modificato_da.username }}</small></p>
                   {% endif %}
                   <p> {{ task.tipo }}</p>
                 </div>
                 <div class="task-actions">
-                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/></button>
-                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><img src="{% static 'icone/check.svg' %}"/></button>
-                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"><img src="{% static 'icone/trash.svg' %}"/></button>
+                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}"
+                    data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}" /> </button>
+                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><img
+                      src="{% static 'icone/check.svg' %}" /></button>
+                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"><img
+                      src="{% static 'icone/trash.svg' %}" /></button>
                 </div>
               </div>
             </div>
-          {% empty %}
-           <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
-          {% endfor %}
-        </div>
-
-        <div class="priority not-urgent-not-important">
-          <h3>Non Urgente Non Importante</h3>
-          {% for task in tasks_nn %}
-            <div class="task-card">
-              <div class="task-header">
-                <div class="task-title">{{ task.descrizione }}</div>                
-                <div class="task-creator">{{ task.creatore.username }}</div>
-              </div>
-              <div class="task-details">
-                <div class="task-type">
-                  {% if task.note %}
-                    <p class="task-note">{{ task.note }}</p>
-                  {% endif %}
-                  {% if task.modificato_da.username %}
-                    <p class = "task-info"><small>Modificata da {{ task.modificato_da.username }}</small></p>
-                  {% endif %}
-                  <p> {{ task.tipo }}</p>
-                </div>
-                <div class="task-actions">
-                  <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}" data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}"/> </button>
-                  <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"><img src="{% static 'icone/check.svg' %}"/></button>
-                  <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"><img src="{% static 'icone/trash.svg' %}"/></button>
-                </div>
-              </div>
-            </div>
-          {% empty %}
+            {% empty %}
             <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
-          {% endfor %}
+            {% endfor %}
+          </div>
         </div>
 
       </div>
@@ -312,5 +323,6 @@
   <script src="{% static 'tabs.js' %}"></script>
   <script src="{% static 'edit-task.js' %}"></script>
   <script src="{% static 'filter-task.js' %}"></script>
+  <script src="{% static 'dragndrop.js' %}"></script>
 </body>
 </html>
