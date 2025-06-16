@@ -1,41 +1,45 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
 from django.contrib.auth.models import User
 from .models import Task
 from django.db.models import Q
 from django.views.decorators.http import require_POST
 
-
-# Create your views here.
+# Vista per la home, accessibile solo agli utenti autenticati
 @login_required(login_url='/accounts/login/')
 def home(request):
     user = request.user
     assegnato_user = None  
     if request.method == 'POST':
+        # Recupera i dati dal form
         descrizione = request.POST.get('descrizione')
         tipo = request.POST.get('tipo')
         priorita = request.POST.get('priorita')
         task_id = request.POST.get('task_id')
         assegnato_id = request.POST.get('assegnato_a')
         note = request.POST.get("note", "")
-        if(assegnato_id):assegnato_user = User.objects.get(id=assegnato_id) #if assegnato_id else None 
+        
+        # Recupera l'utente assegnato se presente
+        if assegnato_id:
+            assegnato_user = User.objects.get(id=assegnato_id)
 
         if task_id:
-            # MODIFICA
+            # MODIFICA: Aggiorna un task esistente
             task = get_object_or_404(Task, id=task_id)
-            task.descrizione = request.POST.get('descrizione')
-            task.tipo = request.POST.get('tipo')
-            task.priorita = request.POST.get('priorita')
+            task.descrizione = descrizione
+            task.tipo = tipo
+            task.priorita = priorita
             task.modificato_da = request.user
-            task.note = request.POST.get('note')
-            if(assegnato_user != None): task.creatore = assegnato_user #assegnata da coordinatore
+            task.note = note
+            if assegnato_user is not None:
+                task.creatore = assegnato_user  # Assegna il task 
             task.save()
             return redirect('home')
-        
         else:
-            if(assegnato_id): user = assegnato_user 
+            # CREA: Crea un nuovo task
+            if assegnato_id:
+                user = assegnato_user 
             Task.objects.create(
                 descrizione=descrizione,
                 tipo=tipo,
@@ -45,6 +49,7 @@ def home(request):
             )
         return redirect('home')
     
+    # Recupera i task in base al ruolo dell'utente
     if user.is_superuser:
         # Il coordinatore vede tutto
         tasks_ui = Task.objects.filter(priorita='UI', completata=False)
@@ -74,31 +79,28 @@ def home(request):
 
     return render(request, "home.html", context)
 
-
+# Vista per completare un task, accessibile solo tramite POST
 @require_POST
 def complete_task(request):
     task_id = request.POST.get('task_id')
     if task_id:
-        
         try:
             task = Task.objects.get(id=task_id)
-            task.completata= True
+            task.completata = True
             task.save()
-            
-            
-            return  JsonResponse({'success': True})
-        
+            return JsonResponse({'success': True})
         except Task.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Task non trovata'})
     return JsonResponse({'success': False, 'error': 'ID mancante'})
-   
+
+# Vista per eliminare un task, accessibile solo tramite POST e solo per utenti autorizzati
 @require_POST
 @login_required
 def elimina_task(request, task_id):
     try:
         task = Task.objects.get(pk=task_id)
 
-        # Controllo: solo il creatore o il coordinatore possono eliminare
+        # Controllo: solo il creatore o il coordinatore possono eliminare qualsiasi task
         if request.user == task.creatore or request.user.is_staff:
             task.delete()
             return JsonResponse({"success": True})
