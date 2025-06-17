@@ -290,22 +290,26 @@
       <div class="completed-task-list">
         {% if completate %}
           {% for task in completate %}
-            <div class="task-card">
-              <div class="task-header">
-                <div class="task-title" id="task-title_comp">{{ task.descrizione }}</div>
-                
-              </div>
-              <div class="task-details-complete">
-                <p class="footer-info-1" id="task-tipo_comp"><strong> {{ task.tipo }}</strong></p>
-                <p class="footer-info-2" id="priority_comp">
-                  {% if task.priorita == "UI" %}<strong>Urgente e Importante</strong> {% endif %}
-                  {% if task.priorita == "IN" %}<strong>Importante Non Urgente</strong>{% endif %}
-                  {% if task.priorita == "UN" %}<strong>Urgente Non Importante</strong>{% endif %}
-                  {% if task.priorita == "NN" %}<strong>Non Urgente Non Importante</strong>{% endif %}
-                </p>
-                <p class="footer-info-3" id="task-creator_comp">Creata da <strong>{{ task.creatore.username }}</strong></p>
-              </div>
+          <div class="task-card {% if task.completata %}completed{% endif %}
+                      {% if task.priorita == 'UI' %}urgent-important
+                      {% elif task.priorita == 'IN' %}important-not-urgent
+                      {% elif task.priorita == 'UN' %}urgent-not-important
+                      {% else %}not-urgent-not-important{% endif %}">
+            <div class="task-header">
+              <div class="task-title" id="task-title_comp">{{ task.descrizione }}</div>
+          
             </div>
+            <div class="task-details-complete">
+              <p class="footer-info-1" id="task-tipo_comp"><strong> {{ task.tipo }}</strong></p>
+              <p class="footer-info-2" id="priority_comp">
+                {% if task.priorita == "UI" %}<strong>Urgente e Importante</strong> {% endif %}
+                {% if task.priorita == "IN" %}<strong>Importante Non Urgente</strong>{% endif %}
+                {% if task.priorita == "UN" %}<strong>Urgente Non Importante</strong>{% endif %}
+                {% if task.priorita == "NN" %}<strong>Non Urgente Non Importante</strong>{% endif %}
+              </p>
+              <p class="footer-info-3" id="task-creator_comp">Creata da <strong>{{ task.creatore.username }}</strong></p>
+            </div>
+          </div>
           {% endfor %}
         {% else %}
           <p>Nessuna task completata</p>

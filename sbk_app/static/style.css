@@ -173,26 +173,26 @@ h3 {
     border-radius: 12px;
     font-weight: bold;
     width: 100%;
-    min-height: 150px;
+    min-height: 260px;
     height: 100%;
     display: grid;
     align-items: flex-start;
     text-align: left;
 }
 
-.urgent-important {
+.priority.urgent-important {
     background-color: #ffe5e5;
 }
 
-.important-not-urgent {
+.priority.important-not-urgent {
     background-color: #fff8cc;
 }
 
-.urgent-not-important {
+.priority.urgent-not-important {
     background-color: #d4fcdc;
 }
 
-.not-urgent-not-important {
+.priority.not-urgent-not-important {
     background-color: #f1f1f5;
 }
 
