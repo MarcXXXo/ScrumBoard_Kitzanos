@@ -1,28 +1,48 @@
-Inizializzazione Progetto
 
-Interfaccia Dashboard
+-- Autenticazione e gestione utenti
 
-Database inizializzato
+    Login/logout con CustomUser
 
-Autenticazione utenti (login, logout, registrazione)
+    Distinzione tra utente normale e coordinatore
 
-Gestione base dei form (convalidata, con messaggi di aiuto password)
+    Ogni utente vede solo le proprie task (assegnate o create) – il coordinatore le vede tutte
 
-Stile CSS coerente Login e Registrazione, font personalizzato 
+-- Modello Task
 
-Redirect corretti e gestione URL organizzata (config/urls.py, accounts/urls.py, sbk_app/urls.py)
+    Campi: descrizione, creatore, assegnato_a, tipo, priorità, stato (attiva/completata), data
 
-Aggiunto modello task
+    Metodo per gestire il completamento/modifica/eliminazione
 
-Implementate Task nella griglia
+-- CRUD task
 
-Modifica Task aggiunta
+    Creazione task da frontend
 
-Completa task aggiunta
+    Modifica task
 
-Elimina task aggiunta
+    Eliminazione task
 
-Controllo per non far eliminare task non proprietarie
+    Completamento task (spostamento nella sezione completate)
 
-Modificato Layout di tutto
+-- Template e viste Django
 
+    Template HTML con sezioni per task attive e task completate
+
+    Vista con @login_required
+
+    Filtraggio task lato backend (già implementato, ma ora potenziato dal JS lato frontend)
+
+    Context che passa solo le task corrette (in base all’utente e al loro stato)
+
+-- Sicurezza & permessi
+
+    Controllo che solo il creatore o coordinatore possa modificare/eliminare
+
+    Task non accessibili da URL a utenti non autorizzati
+
+-- Altri dettagli importanti
+
+    Funzionalità per creare utenti coordinatori (o promuoverli via admin)
+
+    Ordinamento (facoltativo) o raggruppamento per priorità/tipo
+
+    Eventuali messaggi di feedback (successo, errore)

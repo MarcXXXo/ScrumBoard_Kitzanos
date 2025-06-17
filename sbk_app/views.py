@@ -1,4 +1,5 @@
 import json
+from time import localtime
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
@@ -6,12 +7,15 @@ from django.contrib.auth.models import User
 from .models import Task
 from django.db.models import Q
 from django.views.decorators.http import require_POST
+from django.utils import timezone
+from datetime import date
 
 # Vista per la home, accessibile solo agli utenti autenticati
 @login_required(login_url='/accounts/login/')
 def home(request):
     user = request.user
     assegnato_user = None  
+    oggi = timezone.now().date()
     if request.method == 'POST':
         # Recupera i dati dal form
         descrizione = request.POST.get('descrizione')
@@ -57,7 +61,8 @@ def home(request):
         tasks_in = Task.objects.filter(priorita='IN', completata=False)
         tasks_un = Task.objects.filter(priorita='UN', completata=False)
         tasks_nn = Task.objects.filter(priorita='NN', completata=False)
-        completate = Task.objects.filter(completata=True)
+        completate = Task.objects.filter(completata=True, archiviata=False, data_completamento__date=oggi)
+        storico_tasks = Task.objects.filter(completata=True, archiviata=True).order_by('-data_archiviazione')
         utenti = User.objects.all()
     else:
         # Utente normale: solo task proprie o assegnate
@@ -65,9 +70,12 @@ def home(request):
         tasks_ui = Task.objects.filter(filtro, priorita='UI', completata=False)
         tasks_in = Task.objects.filter(filtro, priorita='IN', completata=False)
         tasks_un = Task.objects.filter(filtro, priorita='UN', completata=False)
-        tasks_nn = Task.objects.filter(filtro, priorita='NN', completata=False)
-        completate = Task.objects.filter(filtro, completata=True)
+        tasks_nn = Task.objects.filter(filtro, priorita='NN', completata=False)         
+        completate = Task.objects.filter(filtro, completata=True, archiviata=False, data_completamento=oggi)
+        storico_tasks = Task.objects.filter(filtro, completata=True, archiviata=True).order_by('-data_archiviazione')
         utenti = None
+
+    #storico_tasks = Task.objects.filter(data_archiviazione__isnull=False).order_by('-data_archiviazione')
 
     context = {
         'tasks_ui': tasks_ui,
@@ -76,6 +84,7 @@ def home(request):
         'tasks_nn': tasks_nn,
         'completate': completate,
         'utenti': utenti,
+        'storico_tasks': storico_tasks,
     }
 
     return render(request, "home.html", context)
@@ -84,10 +93,12 @@ def home(request):
 @require_POST
 def complete_task(request):
     task_id = request.POST.get('task_id')
+    
     if task_id:
         try:
             task = Task.objects.get(id=task_id)
             task.completata = True
+            task.data_completamento = timezone.now()
             task.save()
             return JsonResponse({'success': True})
         except Task.DoesNotExist:

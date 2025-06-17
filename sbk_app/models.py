@@ -26,17 +26,23 @@ class Task(models.Model):
     tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
     # Priorità del task, con scelte predefinite
     priorita = models.CharField(max_length=2, choices=PRIORITA_CHOICES)
-    # Utente che ha creato il task
+    # Utente che ha creato la task
     creatore = models.ForeignKey(User, on_delete=models.CASCADE)
-    # Utente che ha modificato il task
+    # Utente che ha modificato la task
     modificato_da = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='tasks_modifica')
-    # Utente a cui è assegnato il task
+    # Utente a cui è assegnato la task
     assegnato_a = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name="task_assegnate")
-    # Stato di completamento del task
+    # Stato di completamento della task
     completata = models.BooleanField(default=False)
-    # Data di creazione del task
+    # Stato di archiviazione della task
+    archiviata = models.BooleanField(default=False)
+    # Data di creazione della task
     data_creazione = models.DateTimeField(auto_now_add=True)
-    # Note aggiuntive sul task
+    # Data di completamento
+    data_completamento = models.DateTimeField(null=True, blank=True)
+    # Data di archiviazione
+    data_archiviazione = models.DateTimeField(null=True, blank=True)
+    # Note aggiuntive sulla task
     note = models.TextField(blank=True, null=True)
 
     def __str__(self):

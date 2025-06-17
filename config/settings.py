@@ -134,12 +134,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # LOCALIZZAZIONE E ORARIO
 # ========================
 
-LANGUAGE_CODE = 'en-us'  # Lingua del progetto
+LANGUAGE_CODE = 'it'  # Lingua del progetto
 
 TIME_ZONE = 'UTC'  # Fuso orario
 
 USE_I18N = True  # Supporto internazionalizzazione
-
+USE_L10N = True
 USE_TZ = True  # Uso timezone-aware datetime
 
 # ========================

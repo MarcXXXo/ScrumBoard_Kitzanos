@@ -92,4 +92,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "filterToggle_comp", "filterMenu_comp", "task-search_comp", "filter-tipo_comp", "filter-priorita_comp", "filter-utente_comp",
         ".task-card.completed", ".footer-info-1", ".task-card.completed", ".footer-info-3 strong"
     );
+
+    setupFilter(
+        "filterToggle_arch", "filterMenu_arch", "task-search_arch", "filter-tipo_arch", "filter-priorita_arch", "filter-utente_archs",
+        ".task-card.archivied", ".footer-info-1", ".task-card.archivied", ".footer-info-3 strong"
+    );
 });
