@@ -10,7 +10,7 @@ class SbkAppConfig(AppConfig):
         from config.check_comp import archiviazione_post_datata
 
         #check al riavvio per eventuali task non archiaviate ma completate
-        archiviazione_post_datata()
+        #archiviazione_post_datata()
 
         #avvia lo script su thread separato per l'archiviazione a fine giornata
         start()
