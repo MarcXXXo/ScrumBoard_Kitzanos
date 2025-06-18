@@ -28,7 +28,7 @@ def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)  # Crea un'istanza del form con i dati POST
         if form.is_valid():
-            user = form.save(commit=False)  # Salva l'utente senza commettere al database per aspettare la scelta sul coordinatore
+            user = form.save(commit=False)  # Salva l'utente senza committare al database per aspettare la scelta sul coordinatore
 
             # Uso is_coordinator per settare is_staff
             user.is_staff = form.cleaned_data.get('is_coordinator', False)  # Imposta is_staff in base a is_coordinator

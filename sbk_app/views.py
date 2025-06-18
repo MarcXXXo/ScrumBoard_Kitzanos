@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from datetime import date
+from django.contrib import messages
 
 # Vista per la home, accessibile solo agli utenti autenticati
 @login_required(login_url='/accounts/login/')
@@ -40,6 +41,7 @@ def home(request):
             if assegnato_user is not None:
                 task.creatore = assegnato_user  # Assegna il task 
             task.save()
+            messages.info(request, "Task Modificata")
             return redirect('home')
         else:
             # CREA: Crea un nuovo task
@@ -52,6 +54,7 @@ def home(request):
                 creatore=user,
                 note=note,
             )
+            messages.info(request, "Task Aggiunta")
         return redirect('home')
     
     # Recupera i task in base al ruolo dell'utente
@@ -100,6 +103,7 @@ def complete_task(request):
             task.completata = True
             task.data_completamento = timezone.now()
             task.save()
+            messages.info(request, "Task Completata")
             return JsonResponse({'success': True})
         except Task.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Task non trovata'})
@@ -115,6 +119,7 @@ def elimina_task(request, task_id):
         # Controllo: solo il creatore o il coordinatore possono eliminare qualsiasi task
         if request.user == task.creatore or request.user.is_staff:
             task.delete()
+            messages.info(request, "Task Eliminata")
             return JsonResponse({"success": True})
         else:
             return JsonResponse({"success": False, "error": "Non autorizzato"}, status=403)
@@ -132,7 +137,9 @@ def update_priority(request):
         task = Task.objects.get(id=task_id)
         # Opzionale: controlla se l'utente ha i permessi per modificare la task
         task.priorita = priorita
+        messages.info(request, "Priorità della task modificata")
         task.save()
+
         return JsonResponse({'success': True})
     except Task.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Task non trovata'})
