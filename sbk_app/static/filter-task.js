@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     setupFilter(
-        "filterToggle_arch", "filterMenu_arch", "task-search_arch", "filter-tipo_arch", "filter-priorita_arch", "filter-utente_archs",
+        "filterToggle_arch", "filterMenu_arch", "task-search_arch", "filter-tipo_arch", "filter-priorita_arch", "filter-utente_arch",
         ".task-card.archivied", ".footer-info-1", ".task-card.archivied", ".footer-info-3 strong"
     );
 });

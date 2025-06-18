@@ -61,7 +61,7 @@ def home(request):
         tasks_in = Task.objects.filter(priorita='IN', completata=False)
         tasks_un = Task.objects.filter(priorita='UN', completata=False)
         tasks_nn = Task.objects.filter(priorita='NN', completata=False)
-        completate = Task.objects.filter(completata=True, archiviata=False, data_completamento__date=oggi)
+        completate = Task.objects.filter(completata=True, archiviata=False, data_completamento=oggi)
         storico_tasks = Task.objects.filter(completata=True, archiviata=True).order_by('-data_archiviazione')
         utenti = User.objects.all()
     else:

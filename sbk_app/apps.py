@@ -6,5 +6,11 @@ class SbkAppConfig(AppConfig):
     name = 'sbk_app'
 
     def ready(self):
-        from config import scheduler
-        scheduler.start()
+        from config.scheduler import start
+        from config.check_comp import archiviazione_post_datata
+
+        #check al riavvio per eventuali task non archiaviate ma completate
+        archiviazione_post_datata()
+
+        #avvia lo script su thread separato per l'archiviazione a fine giornata
+        start()

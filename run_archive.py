@@ -1,10 +1,12 @@
 import os
 import django
 
+#file da runnare manualmente con python 'run_archive.py' per testare archiviazione automatica
+
 # Configura l'ambiente Django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')  # usa il nome giusto se non è "config"
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')  
 django.setup()
 
-from config.scheduler import move_completed_tasks_to_history
+from config.scheduler import archiviazione_timerata
 
-move_completed_tasks_to_history()
+archiviazione_timerata()

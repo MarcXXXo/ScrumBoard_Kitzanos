@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
         task.setAttribute('draggable', true);
 
         task.addEventListener('dragstart', (e) => {
+
+            const priorita = task.dataset.priorita;
+            console.log('[DRAGSTART] Priorità iniziale:', priorita);
+
             e.dataTransfer.setData('text/plain', task.dataset.taskId); // Imposta l'ID della task
             e.dataTransfer.effectAllowed = 'move';
             task.classList.add('dragging'); // Aggiungi classe per stilizzazione
@@ -21,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gestisci il drop nei contenitori di priorità
     priorityContainers.forEach(container => {
         container.addEventListener('dragover', (e) => {
+            
             e.preventDefault(); // Permetti il drop
             e.dataTransfer.dropEffect = 'move';
             container.classList.add('drag-over'); // Aggiungi classe per stilizzazione
@@ -38,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (taskCard) {
                 container.querySelector('.task-list').appendChild(taskCard); // Aggiungi la task al contenitore
                 const newPriority = container.dataset.priorityCode; // Ottieni il nuovo codice di priorità
+                taskCard.dataset.priorita = newPriority;
+                console.log('[DROP] Nuova priorità assegnata:', newPriority); // Aggiorno priorità nel DOM
                 updateTaskPriority(taskId, newPriority); // Aggiorna la priorità nel backend
             }
         });

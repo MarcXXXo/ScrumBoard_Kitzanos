@@ -39,9 +39,9 @@ class Task(models.Model):
     # Data di creazione della task
     data_creazione = models.DateTimeField(auto_now_add=True)
     # Data di completamento
-    data_completamento = models.DateTimeField(null=True, blank=True)
+    data_completamento = models.DateField(null=True, blank=True)
     # Data di archiviazione
-    data_archiviazione = models.DateTimeField(null=True, blank=True)
+    data_archiviazione = models.DateField(null=True, blank=True)
     # Note aggiuntive sulla task
     note = models.TextField(blank=True, null=True)
 

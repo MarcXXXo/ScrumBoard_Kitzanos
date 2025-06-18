@@ -24,6 +24,8 @@ document.querySelectorAll('.edit-task').forEach(button => {
         const tipo = this.dataset.tipo;
         const priorita = this.dataset.priorita;
         const form = document.getElementById('tabs');
+        const currentPriorita = card.dataset.priorita;
+        console.log('[MODIFICA] Priorità attuale letta dal DOM:', currentPriorita);
         if (form && typeof form.scrollIntoView === 'function') {
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -31,11 +33,12 @@ document.querySelectorAll('.edit-task').forEach(button => {
         document.getElementById('task_id').value = taskId;
         document.getElementById('descrizione').value = descrizione;
         document.getElementById('tipo').value = tipo;
-        document.getElementById('priorita').value = priorita;
+        document.getElementById('priorita').value = currentPriorita;
 
         document.getElementById('form-button').innerText = "Salva Modifiche";
         editingTaskId = taskId;
         console.log('Task da modificare:', editingTaskId);
+        
     });
 });
 
