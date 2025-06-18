@@ -16,5 +16,15 @@
     </form>
     <p>Hai già un account? <a href="{% url 'login' %}">Accedi</a></p>
   </div>
+  <div id="toast-container" class="toast-container"></div>
+    <script id="django-messages" type="application/json">
+      [
+        {% for message in messages %}
+          {"level": "{{ message.level_tag }}", "text": "{{ message|escapejs }}"}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ]
+    </script>
+  <script src="{% static 'toast.js' %}"></script>
 </body>
 </html>
+

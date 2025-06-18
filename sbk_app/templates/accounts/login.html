@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -9,11 +10,7 @@
 <body>
     <div class="form-container">
         <h2>Login</h2>
-        {% if messages %}
-            {% for message in messages %}
-                <p style="color: red;">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
+        
         <form method="POST">
             {% csrf_token %}
             <label for="username">Username:</label><br>
@@ -24,5 +21,14 @@
             <p>Non hai un account? <a href="{% url 'register' %}">Registrati qui</a></p>
         </form>
     </div>
+    <div id="toast-container" class="toast-container"></div>
+        <script id="django-messages" type="application/json">
+            [
+            {% for message in messages %}
+                {"level": "{{ message.level_tag }}", "text": "{{ message|escapejs }}"}{% if not forloop.last %},{% endif %}
+            {% endfor %}
+            ]
+        </script>
+  <script src="{% static 'toast.js' %}"></script>
 </body>
 </html>

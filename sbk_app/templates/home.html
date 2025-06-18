@@ -64,6 +64,9 @@
               {% endfor %}
             </select>
             {% endif %}
+            <button class="reset-filter-btn" data-sezione="attive">
+              <img src="{% static 'icone/reset.svg' %}" alt="Reset filtri" style="width: 24px; height: 24px;">
+            </button>
           </div>
         </div>
       </div>
@@ -283,6 +286,9 @@
               {% endfor %}
             </select>
             {% endif %}
+            <button class="reset-filter-btn" data-sezione="completate">
+              <img src="{% static 'icone/reset.svg' %}" alt="Reset filtri" style="width: 24px; height: 24px;">
+            </button>
           </div>
         </div>
       </div>
@@ -359,6 +365,9 @@
               {% endfor %}
             </select>
             {% endif %}
+            <button class="reset-filter-btn" data-sezione="archiviate">
+              <img src="{% static 'icone/reset.svg' %}" alt="Reset filtri">
+            </button>
           </div>
         </div>
       </div>
@@ -396,6 +405,16 @@
     </div> 
     
   
+  
+  <div id="toast-container" class="toast-container"></div>
+  <script src="{% static 'toast.js' %}"></script>
+  <script id="django-messages" type="application/json">
+      [
+        {% for message in messages %}
+          {"level": "{{ message.level_tag }}", "text": "{{ message|escapejs }}"}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ]
+    </script>
   <script>
     document.cookie = "csrftoken={{ csrf_token }}";
   </script>
@@ -404,5 +423,7 @@
   <script src="{% static 'edit-task.js' %}"></script>
   <script src="{% static 'filter-task.js' %}"></script>
   <script src="{% static 'dragndrop.js' %}"></script>
+  
+  
 </body>
 </html>

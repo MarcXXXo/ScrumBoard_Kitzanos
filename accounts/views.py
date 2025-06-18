@@ -11,6 +11,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)  # Effettua il login dell'utente
+            messages.success(request, "Login effettuato con successo!")
             return redirect('home')  # Reindirizza alla home
         else:
             messages.error(request, 'Username o password non validi.')  # Messaggio di errore
@@ -19,6 +20,7 @@ def login_view(request):
 # Vista per il logout degli utenti
 def logout_view(request):
     logout(request)  # Effettua il logout
+    messages.success(request, "Logout effettuato con successo!")
     return redirect('login')  # Reindirizza alla pagina di login
 
 # Vista per la registrazione degli utenti

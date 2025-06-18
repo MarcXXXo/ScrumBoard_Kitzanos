@@ -432,9 +432,12 @@ h3 {
     border-radius: var(--border-radius);
 }
 
+
 /* =============== 
      DROPDOWN 
    =============== */
+
+
 .dropdown {
     position: relative;
     display: inline-flex;
@@ -442,7 +445,8 @@ h3 {
     gap: 0.5rem;
 }
 
-.dropbtn {
+.dropbtn,
+.reset-filter-btn {
     background: none;
     border: none;
     cursor: pointer;
@@ -476,4 +480,72 @@ h3 {
 
 h2 {
     margin: 0;
+}
+
+/* =============== 
+    MESSAGGI TOAST
+   =============== */
+
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;        /* in primo piano */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;            /* spazio verticale tra toast */
+  max-width: 300px;     /* larghezza massima */
+  pointer-events: none; /* permette click sotto i toast */
+}
+
+/* Stile base del singolo toast */
+.toast {
+  background-color: #333;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  font-size: 14px;
+  opacity: 0;
+  transform: translateX(100%);
+  pointer-events: auto; /* rendi cliccabile il toast */
+  animation: slideIn 0.3s forwards, fadeOut 0.3s 3.7s forwards;
+}
+
+/* Differenzia i toast per tipo di messaggio */
+.toast.info {
+  background-color: #2196F3; /* blu */
+}
+
+.toast.success {
+  background-color: #4CAF50; /* verde */
+}
+
+.toast.warning {
+  background-color: #ff9800; /* arancione */
+}
+
+.toast.error {
+  background-color: #f44336; /* rosso */
+}
+
+/* Animazioni */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }

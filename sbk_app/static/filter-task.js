@@ -13,13 +13,6 @@ function setupFilter(toggleId, menuId, inputId, tipoId, prioritaId, utenteId, ca
         const priorita = prioritaFilter.value;
         const utente = utenteFilter?.value || "";
 
-        console.log("Filtraggio completate:", {
-            search,
-            tipo,
-            priorita,
-            utente,
-        });
-
         taskCards.forEach(card => {
             const descrizione = card.querySelector(".task-title")?.innerText.toLowerCase() || "";
             const tipoText = card.querySelector(tipoSelector)?.innerText || "";
@@ -73,14 +66,46 @@ function setupFilter(toggleId, menuId, inputId, tipoId, prioritaId, utenteId, ca
     }, 300);
 }
 // Funzione per mappare la priorità a una classe
-    function prioritaToClass(code) {
-        return {
-            UI: "urgent-important",
-            IN: "important-not-urgent",
-            UN: "urgent-not-important",
-            NN: "not-urgent-not-important"
-        }[code] || "";
+function prioritaToClass(code) {
+    return {
+        UI: "urgent-important",
+        IN: "important-not-urgent",
+        UN: "urgent-not-important",
+        NN: "not-urgent-not-important"
+    }[code] || "";
+}
+
+
+function resetFiltri(sezione) {
+    const prefix = {
+        attive: '',
+        completate: '_comp',
+        archiviate: '_arch'
+    }[sezione];
+
+    const search = document.getElementById(`task-search${prefix}`);
+    const tipo = document.getElementById(`filter-tipo${prefix}`);
+    const priorita = document.getElementById(`filter-priorita${prefix}`);
+    const utente = document.getElementById(`filter-utente${prefix}`);
+
+    if (search) search.value = "";
+    if (tipo) tipo.selectedIndex = 0;
+    if (priorita) priorita.selectedIndex = 0;
+    if (utente) utente.selectedIndex = 0;
+
+    // Rilancia filtro corretto
+    switch (sezione) {
+        case 'attive':
+            if (typeof filtraTaskAttive === 'function') filtraTaskAttive();
+            break;
+        case 'completate':
+            if (typeof filtraTaskCompletate === 'function') filtraTaskCompletate();
+            break;
+        case 'archiviate':
+            if (typeof filtraTaskArchiviate === 'function') filtraTaskArchiviate();
+            break;
     }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     setupFilter(
@@ -97,4 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
         "filterToggle_arch", "filterMenu_arch", "task-search_arch", "filter-tipo_arch", "filter-priorita_arch", "filter-utente_arch",
         ".task-card.archivied", ".footer-info-1", ".task-card.archivied", ".footer-info-3 strong"
     );
+
+    const resetButtons = document.querySelectorAll(".reset-filters-btn");
+    resetButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const sezione = button.dataset.sezione;
+            resetFiltri(sezione);
+        });
+    });
 });
