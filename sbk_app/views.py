@@ -137,7 +137,7 @@ def update_priority(request):
         task = Task.objects.get(id=task_id)
         # Opzionale: controlla se l'utente ha i permessi per modificare la task
         task.priorita = priorita
-        messages.info(request, "Priorità della task modificata")
+        #messages.info(request, "Priorità della task modificata")
         task.save()
 
         return JsonResponse({'success': True})

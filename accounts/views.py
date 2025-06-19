@@ -25,15 +25,21 @@ def logout_view(request):
 
 # Vista per la registrazione degli utenti
 def register_view(request):
+    
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)  # Crea un'istanza del form con i dati POST
+        form = CustomUserCreationForm(request.POST)
+          # Crea un'istanza del form con i dati POST
         if form.is_valid():
             user = form.save(commit=False)  # Salva l'utente senza committare al database per aspettare la scelta sul coordinatore
-
             # Uso is_coordinator per settare is_staff
             user.is_staff = form.cleaned_data.get('is_coordinator', False)  # Imposta is_staff in base a is_coordinator
+            user.is_superuser = user.is_staff
             user.save()  # Salva l'utente nel database
-            return redirect('login')  # Reindirizza alla pagina di login
-    else:
-        form = CustomUserCreationForm()  # Crea un nuovo form vuoto
+            login(request, user)
+            messages.success(request, 'Registrazione completata! Sei loggato')
+            return redirect('home')  # Logga automaticamente
+        else:
+            messages.error(request, 'Nome utente o Password non validi')
+    else: 
+        form = CustomUserCreationForm()       
     return render(request, 'accounts/register.html', {'form': form})  # Rende il template di registrazione

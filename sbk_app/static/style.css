@@ -171,7 +171,7 @@ h3 {
 .priority {
     padding: 20px;
     border-radius: 12px;
-    font-weight: bold;
+    /*font-weight: bold;*/
     width: 100%;
     min-height: 260px;
     height: 100%;
@@ -250,7 +250,7 @@ h3 {
 }
 
 .task-creator {
-    font-weight: 700;
+    /*font-weight: 700;*/
     font-size: 0.9rem;
     color: #666;
 }
@@ -282,11 +282,12 @@ h3 {
     align-items: flex-end;
 }
 
-.task-note {
-    font-weight: 700;
+p.task-note {
+    font-weight: 500;
     font-size: 0.9rem;
     white-space: normal; 
     word-wrap: break-word;
+    padding-bottom:1rem;
 }
 
 #note {
@@ -298,7 +299,7 @@ h3 {
     border-radius: var(--border-radius);
     font-family: inherit;
     box-sizing: border-box;
-    font-weight: 700;
+    /*font-weight: 700;*/
 }
 
 .task-details-complete {
@@ -306,6 +307,16 @@ h3 {
     color: #555;
     justify-content: space-between;
     align-items: flex-start;
+}
+
+.task-pie{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.task-pie p{
+    margin-right:0.5rem;
 }
 
 /* ==================
@@ -469,7 +480,7 @@ h3 {
 .dropdown-content select,
 .dropdown-content input {
     display: block;
-    font-weight: 600;
+    font-weight: 400;
     margin-bottom: 0.8rem;
     width: 100%;
 }
