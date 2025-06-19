@@ -1,33 +1,53 @@
-// Funzione per inizializzare le tab
 function initTabs() {
-  // Seleziona tutti gli elementi con classe 'tab'
   const tabs = document.querySelectorAll('.tab');
-  // Seleziona tutti gli elementi con classe 'tab-content'
   const contents = document.querySelectorAll('.tab-content');
+  let activeTabId = null;
 
-  // Aggiunge un event listener di click a ciascuna tab (fatto in modo che si possano aggiungere altre tabs )
+  // Mappa dei prefissi dei filtri per ogni tab
+  const prefixMap = {
+    attive: '',
+    completate: '_comp',
+    storico: '_arch'
+  };
+
+  function resetFiltriTab(tabId) {
+    const prefix = prefixMap[tabId];
+    if (prefix === undefined) return;
+
+    const search = document.getElementById(`task-search${prefix}`);
+    const tipo = document.getElementById(`filter-tipo${prefix}`);
+    const priorita = document.getElementById(`filter-priorita${prefix}`);
+    const utente = document.getElementById(`filter-utente${prefix}`);
+
+    if (search) search.value = "";
+    if (tipo) tipo.selectedIndex = 0;
+    if (priorita) priorita.selectedIndex = 0;
+    if (utente) utente.selectedIndex = 0;
+  }
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      // Rimuove la classe 'active' da tutte le tab
+      const newTabId = tab.getAttribute('data-tab');
+      if (newTabId === activeTabId) return;
+
+      // Resetta filtri della tab precedente
+      if (activeTabId) resetFiltriTab(activeTabId);
+
+      // Cambia la tab attiva
       tabs.forEach(t => t.classList.remove('active'));
-      // Aggiunge la classe 'active' alla tab cliccata
       tab.classList.add('active');
 
-      const tabId = tab.getAttribute('data-tab');
-      // Rimuove la classe 'active' da tutti gli elementi con classe 'tab-content'
       contents.forEach(c => c.classList.remove('active'));
+      const contentToShow = document.getElementById(newTabId);
+      if (contentToShow) contentToShow.classList.add('active');
 
-      const contentToShow = document.getElementById(tabId);
-      // Se il contenuto esiste, aggiunge la classe 'active' per renderlo visibile
-      if (contentToShow) {
-        contentToShow.classList.add('active');
-      } else {
-        // Erroe se l'elemento con l'id specificato non è stato trovato
-        console.warn(`Task con id ${tabId} non trovata.`);
-      }
+      activeTabId = newTabId;
     });
   });
+
+  // Tab attiva iniziale
+  const defaultTab = document.querySelector('.tab.active');
+  activeTabId = defaultTab ? defaultTab.getAttribute('data-tab') : null;
 }
 
-// Inizializza le tab quando il DOM è completamente carico
 document.addEventListener('DOMContentLoaded', initTabs);

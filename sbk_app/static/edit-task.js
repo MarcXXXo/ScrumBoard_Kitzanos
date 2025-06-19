@@ -25,6 +25,8 @@ document.querySelectorAll('.edit-task').forEach(button => {
         const priorita = this.dataset.priorita;
         const form = document.getElementById('tabs');
         const currentPriorita = card.dataset.priorita;
+        const note = card.querySelector('.task-note')?.innerText || "";
+
         console.log('[MODIFICA] Priorità attuale letta dal DOM:', currentPriorita);
         if (form && typeof form.scrollIntoView === 'function') {
             form.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -34,6 +36,7 @@ document.querySelectorAll('.edit-task').forEach(button => {
         document.getElementById('descrizione').value = descrizione;
         document.getElementById('tipo').value = tipo;
         document.getElementById('priorita').value = currentPriorita;
+        document.getElementById('note').value = note;
 
         document.getElementById('form-button').innerText = "Salva Modifiche";
         editingTaskId = taskId;

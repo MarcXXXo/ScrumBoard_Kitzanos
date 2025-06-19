@@ -225,6 +225,15 @@ h3 {
     margin: 0 auto 1rem auto;
 }
 
+.vecchia-task {
+    border-left: 5px solid #f39c12;
+    background-color: #fffbe6;
+}
+
+.mia-task{
+    border-left: 5px solid #2323c5;
+}
+
 /* =============== 
     HEADER TASK 
    =============== */

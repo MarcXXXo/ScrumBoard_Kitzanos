@@ -53,6 +53,7 @@ def home(request):
                 priorita=priorita,
                 creatore=user,
                 note=note,
+                data_creazione=timezone.now().date(),
             )
             messages.info(request, "Task Aggiunta")
         return redirect('home')

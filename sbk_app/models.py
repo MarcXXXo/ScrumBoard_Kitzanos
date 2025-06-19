@@ -37,7 +37,7 @@ class Task(models.Model):
     # Stato di archiviazione della task
     archiviata = models.BooleanField(default=False)
     # Data di creazione della task
-    data_creazione = models.DateTimeField(auto_now_add=True)
+    data_creazione = models.DateField(null=True, blank=True)
     # Data di completamento
     data_completamento = models.DateField(null=True, blank=True)
     # Data di archiviazione

@@ -19,8 +19,7 @@ function setupFilter(toggleId, menuId, inputId, tipoId, prioritaId, utenteId, ca
             const prioritaContainer = card.closest(prioritaClassSelector);
             const hasPriorita = priorita === "" || prioritaContainer?.classList.contains(prioritaToClass(priorita));
             const creatore = card.querySelector(utenteSelector)?.innerText || "";
-                                                              //decommentare per cercare in tutta la card
-            const matchSearch = descrizione.includes(search); //|| tipoText.toLowerCase().includes(search) || creatore.toLowerCase().includes(search);
+            const matchSearch = descrizione.includes(search);
             const matchTipo = tipo === "" || tipoText.includes(tipo);
             const matchUtente = utente === "" || creatore === utente;
 
@@ -28,13 +27,12 @@ function setupFilter(toggleId, menuId, inputId, tipoId, prioritaId, utenteId, ca
             card.style.display = visible ? "block" : "none";
         });
     }
-    
 
     toggle.addEventListener("click", (e) => {
         e.stopPropagation();
         menu.classList.toggle("show");
         const expanded = toggle.getAttribute("aria-expanded") === "true";
-        toggle.setAttribute("aria-expanded", (!expanded).toString()); 
+        toggle.setAttribute("aria-expanded", (!expanded).toString());
     });
 
     document.addEventListener("click", (e) => {
@@ -64,8 +62,13 @@ function setupFilter(toggleId, menuId, inputId, tipoId, prioritaId, utenteId, ca
             filtraTask();
         }
     }, 300);
+
+    // ritorna la funzione filtraTask per poterla chiamare esternamente
+    return {
+        filtraTask: filtraTask
+    };
 }
-// Funzione per mappare la priorità a una classe
+
 function prioritaToClass(code) {
     return {
         UI: "urgent-important",
@@ -74,7 +77,6 @@ function prioritaToClass(code) {
         NN: "not-urgent-not-important"
     }[code] || "";
 }
-
 
 function resetFiltri(sezione) {
     const prefix = {
@@ -92,42 +94,64 @@ function resetFiltri(sezione) {
     if (tipo) tipo.selectedIndex = 0;
     if (priorita) priorita.selectedIndex = 0;
     if (utente) utente.selectedIndex = 0;
-
-    // Rilancia filtro corretto
-    switch (sezione) {
-        case 'attive':
-            if (typeof filtraTaskAttive === 'function') filtraTaskAttive();
-            break;
-        case 'completate':
-            if (typeof filtraTaskCompletate === 'function') filtraTaskCompletate();
-            break;
-        case 'archiviate':
-            if (typeof filtraTaskArchiviate === 'function') filtraTaskArchiviate();
-            break;
-    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    setupFilter(
+
+    const today = new Date();
+    const todayStr = today.toLocaleDateString('it-IT'); // formato: "gg/mm/aaaa"
+    const log = document.getElementById('header');
+    const actualLog = log.dataset.logged;
+
+    document.querySelectorAll('.task-card:not(.completed)').forEach(card => {
+        const dateText = card.dataset.creazione;
+        const creator = card.dataset.user;
+        console.log(card.outerHTML);
+        console.log("data creazione:", dateText);
+        console.log("oggi:", today.toLocaleDateString('it-IT'));
+
+        if(creator && creator == actualLog){
+            card.classList.add('mia-task');
+        }
+
+        if (dateText !== todayStr) {
+            // Aggiungi una classe CSS per colorarla
+            card.classList.add('vecchia-task');
+        }
+    });
+
+    const filtroAttive = setupFilter(
         "filterToggle", "filterMenu", "task-search", "filter-tipo", "filter-priorita", "filter-utente",
-        ".task-card:not(.completed)", ".task-type", ".priority", ".task-creator"
+        ".task-card:not(.completed)", ".task-type", ".urgent-important, .important-not-urgent, .urgent-not-important, .not-urgent-not-important", ".task-creator"
     );
 
-    setupFilter(
+    const filtroCompletate = setupFilter(
         "filterToggle_comp", "filterMenu_comp", "task-search_comp", "filter-tipo_comp", "filter-priorita_comp", "filter-utente_comp",
         ".task-card.completed", ".footer-info-1", ".task-card.completed", ".footer-info-3 strong"
     );
 
-    setupFilter(
+    const filtroArchiviate = setupFilter(
         "filterToggle_arch", "filterMenu_arch", "task-search_arch", "filter-tipo_arch", "filter-priorita_arch", "filter-utente_arch",
         ".task-card.archivied", ".footer-info-1", ".task-card.archivied", ".footer-info-3 strong"
     );
 
-    const resetButtons = document.querySelectorAll(".reset-filters-btn");
+    const resetButtons = document.querySelectorAll(".reset-filter-btn");
     resetButtons.forEach(button => {
         button.addEventListener("click", () => {
             const sezione = button.dataset.sezione;
             resetFiltri(sezione);
+
+            switch (sezione) {
+                case 'attive':
+                    filtroAttive.filtraTask();
+                    break;
+                case 'completate':
+                    filtroCompletate.filtraTask();
+                    break;
+                case 'archiviate':
+                    filtroArchiviate.filtraTask();
+                    break;
+            }
         });
     });
 });
