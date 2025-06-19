@@ -147,7 +147,7 @@
           <h3>Importante Non Urgente</h3>
           <div class="task-list">
             {% for task in tasks_in %}
-              <div class="task-card" data-task-id = {{task.id}} data-priorita="{{ task.priorita }}" data-creazione="{{ task.data_creazione|date:'d-m-Y' }}" data-user="{{task.creatore.username}}">
+              <div class="task-card" data-task-id = {{task.id}} data-priorita="{{ task.priorita }}" data-creazione="{{ task.data_creazione|date:'d/m/Y' }}" data-user="{{task.creatore.username}}">
                 <div class="task-header">
                   <div class="task-title">{{ task.descrizione }}</div>
                   <div class="task-creator">{{ task.creatore.username }}</div>
@@ -182,7 +182,7 @@
           <h3>Urgente Non Importante</h3>
           <div class="task-list">
             {% for task in tasks_un %}
-              <div class="task-card" data-task-id = {{task.id}} data-priorita="{{ task.priorita }}" data-creazione="{{ task.data_creazione|date:'d-m-Y' }}" data-user="{{task.creatore.username}}">
+              <div class="task-card" data-task-id = {{task.id}} data-priorita="{{ task.priorita }}" data-creazione="{{ task.data_creazione|date:'d/m/Y' }}" data-user="{{task.creatore.username}}">
                 <div class="task-header">
                   <div class="task-title">{{ task.descrizione }}</div>
                   <div class="task-creator">{{ task.creatore.username }}</div>
@@ -217,7 +217,7 @@
           <h3>Non Urgente Non Importante</h3>
           <div class="task-list">
             {% for task in tasks_nn %}
-            <div class="task-card" data-task-id = {{task.id}} data-priorita="{{ task.priorita }}" data-creazione="{{ task.data_creazione|date:'d-m-Y' }}" data-user="{{task.creatore.username}}">
+            <div class="task-card" data-task-id = {{task.id}} data-priorita="{{ task.priorita }}" data-creazione="{{ task.data_creazione|date:'d/m/Y' }}" data-user="{{task.creatore.username}}">
               <div class="task-header">
                 <div class="task-title">{{ task.descrizione }}</div>
                 <div class="task-creator">{{ task.creatore.username }}</div>
@@ -310,7 +310,7 @@
                           {% if task.priorita == 'UI' %}urgent-important
                           {% elif task.priorita == 'IN' %}important-not-urgent
                           {% elif task.priorita == 'UN' %}urgent-not-important
-                          {% else %}not-urgent-not-important{% endif %}">
+                          {% else %}not-urgent-not-important{% endif %}" data-creazione="{{ task.data_creazione|date:'d/m/Y' }}">
           <div class="task-header">
             <div class="task-title" id="task-title_comp">{{ task.descrizione }}</div>
     
@@ -393,7 +393,7 @@
                     {% if task.priorita == 'UI' %}urgent-important
                     {% elif task.priorita == 'IN' %}important-not-urgent
                     {% elif task.priorita == 'UN' %}urgent-not-important
-                    {% else %}not-urgent-not-important{% endif %}">
+                    {% else %}not-urgent-not-important{% endif %}" data-creazione="{{ task.data_creazione|date:'d/m/Y' }}">
           <div class="task-header">
             <div class="task-title" id="task-title_arch">{{ task.descrizione }}</div>
       
