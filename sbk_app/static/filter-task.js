@@ -106,9 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.task-card').forEach(card => {
         const dateText = card.dataset.creazione;
         const creator = card.dataset.user;
-        console.log(card.outerHTML);
-        console.log("data creazione:", dateText);
-        console.log("oggi:", today.toLocaleDateString('it-IT'));
 
         if(creator && creator == actualLog){
             card.classList.add('mia-task');
