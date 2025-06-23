@@ -11,7 +11,6 @@
     --border-radius: 8px;
     --font-family-main: 'Montserrat', sans-serif;
 }
-
 /* =============== 
     FONT GENERALE 
    =============== */
@@ -19,18 +18,15 @@
     font-family: 'Montserrat';
     src: url('/static/font/Montserrat-Medium.woff2') format('woff2');
 }
-
 /* ================= 
      STILE GENERALE
    ================= */
 * {
     box-sizing: border-box;
 }
-
 body, input, textarea, select, button {
     font-family: var(--font-family-main);
 }
-
 body {
     background-color: var(--background-color);
     margin: 0;
@@ -40,7 +36,6 @@ body {
     justify-content: center;
     align-items: flex-start;
 }
-
 /* ======================== 
     CONTENITORE PRINCIPALE
    ======================== */
@@ -56,7 +51,6 @@ body {
     display: flex;
     flex-direction: column;
 }
-
 /* =============== 
         TABS 
    =============== */
@@ -66,7 +60,6 @@ body {
     flex-wrap: wrap;
     gap: 10px;
 }
-
 .tab {
     padding: 10px 30px;
     border: none;
@@ -76,7 +69,6 @@ body {
     cursor: pointer;
     color: #555;
 }
-
 .tab.active {
     background-color: white;
     font-weight: bold;
@@ -84,7 +76,6 @@ body {
     border: 1px solid var(--border-color);
     border-bottom: none;
 }
-
 /* =============== 
      CARD TASK 
    =============== */
@@ -100,7 +91,6 @@ body {
     flex-direction: column;
     min-height: 0;
 }
-
 /* =============== 
      INPUT GROUP
    =============== */
@@ -111,7 +101,6 @@ body {
     justify-content: center;
     flex-wrap: wrap; 
 }
-
 .input-group input,
 .input-group select {
     padding: 8px 12px;
@@ -119,7 +108,6 @@ body {
     border: 1px solid var(--border-color);
     font-size: 14px;
 }
-
 /* ====================
      PULSANTE AGGIUNGI 
    ==================== */
@@ -132,7 +120,6 @@ body {
     cursor: pointer;
     font-weight: 800;
 }
-
 /* ===================
      GRIGLIA PRIORITÀ 
    =================== */
@@ -144,7 +131,6 @@ body {
     height: auto;
     min-height: 0;
 }
-
 /* =============== 
       HEADER 
    =============== */
@@ -154,24 +140,19 @@ body {
     align-items: flex-start;
     gap: 10px;
 }
-
 a {
     text-decoration: none;
 }
-
 h3 {
     margin-top: 0;
     font-size: 16px;
 }
-
-
 /* =============== 
       PRIORITÀ 
    =============== */
 .priority {
     padding: 20px;
     border-radius: 12px;
-    /*font-weight: bold;*/
     width: 100%;
     min-height: 260px;
     height: 100%;
@@ -179,34 +160,27 @@ h3 {
     align-items: flex-start;
     text-align: left;
 }
-
 .priority.urgent-important {
     background-color: #ffe5e5;
 }
-
 .priority.important-not-urgent {
     background-color: #fff8cc;
 }
-
 .priority.urgent-not-important {
     background-color: #d4fcdc;
 }
-
 .priority.not-urgent-not-important {
     background-color: #f1f1f5;
 }
-
 /* =================
      DISPLAY DEI TAB 
    ================= */
 .tab-content {
     display: none;
 }
-
 .tab-content.active {
     display: block;
 }
-
 /* ==================
      TASK MODIFICATA 
    ================== */
@@ -224,16 +198,13 @@ h3 {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
     margin: 0 auto 1rem auto;
 }
-
 .vecchia-task {
     border-left: 5px solid #f39c12;
     background-color: #fffbe6;
 }
-
 .mia-task{
     border-left: 5px solid #2323c5;
 }
-
 /* =============== 
     HEADER TASK 
    =============== */
@@ -247,7 +218,6 @@ h3 {
     border-style: solid;
     padding-bottom: 2px;
 }
-
 .task-title {
     font-weight: bold;
     font-size: 0.95rem;
@@ -257,13 +227,10 @@ h3 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 .task-creator {
-    /*font-weight: 700;*/
     font-size: 0.9rem;
     color: #666;
 }
-
 /* ================ 
      DETTAGLI TASK 
    ================ */
@@ -277,12 +244,10 @@ h3 {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 .task-divider {
     border-top: 1px solid #ddd;
     margin: 6px 0;
 }
-
 .task-details {
     font-size: 0.85em;
     color: #555;
@@ -290,7 +255,6 @@ h3 {
     justify-content: space-between;
     align-items: flex-end;
 }
-
 p.task-note {
     font-weight: 500;
     font-size: 0.9rem;
@@ -298,36 +262,54 @@ p.task-note {
     word-wrap: break-word;
     padding-bottom:1rem;
 }
-
 #note {
-    resize: none;                /* Disabilita il trascinamento */
-    height: 2.5rem;              /* Altezza simile a un input */
+    resize: none;                
+    height: 2.5rem;              
     padding: 11px 8px;
     font-size: 13px;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     font-family: inherit;
     box-sizing: border-box;
-    /*font-weight: 700;*/
 }
-
+.collapsible-note-container {
+    margin-top: 8px;
+}
+.collapsible-note-trigger {
+    cursor: pointer;
+    font-weight: 400;
+    margin-bottom: 2px;
+}
+.collapsible-note-trigger::before {
+    content: "▶ ";
+}
+.collapsible-note-container.active .collapsible-note-trigger::before {
+    content: "▼ ";
+}
+.collapsible-note {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+.collapsible-note-container.active .collapsible-note {
+    max-height: auto;
+}
+.collapsible-note-trigger:hover {
+  color: #0077cc;
+}
+.collapsible-note-container .note-header {
+    margin-top: 0.3rem;
+    margin-bottom: 0.2rem;
+}
+h4{
+    font-weight: 400;
+}
 .task-details-complete {
     font-size: 0.70em;
     color: #555;
     justify-content: space-between;
     align-items: flex-start;
 }
-
-.task-pie{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.task-pie p{
-    margin-right:0.5rem;
-}
-
 /* ==================
      TASK FOOTER INFO  
    ================== */
@@ -335,7 +317,6 @@ p.task-note {
     margin-top: 5px;
     margin-bottom: 5px;
 }
-
 /* ================
      PULSANTI TASK
    ================ */
@@ -344,7 +325,6 @@ p.task-note {
     justify-content: space-between;
     gap: 6px;
 }
-
 .task-buttons button {
     font-size: 0.8em;
     padding: 4px 8px;
@@ -353,22 +333,18 @@ p.task-note {
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 }
-
 .task-buttons .edit {
     background-color: #f0ad4e;
     color: white;
 }
-
 .task-buttons .complete {
     background-color: #5cb85c;
     color: white;
 }
-
 .task-buttons .delete {
     background-color: #d9534f;
     color: white;
 }
-
 /* =============== 
     AZIONI TASK
    =============== */
@@ -380,15 +356,6 @@ p.task-note {
     flex-direction: column;
     justify-content: space-between;
 }
-
-.task-type p {
-    flex-wrap: nowrap;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0.5rem;
-    justify-content: flex-end;
-}
-
 .task-actions button {
     background: none;
     border: none;
@@ -397,11 +364,9 @@ p.task-note {
     color: var(--text-color);
     transition: color 0.2s ease;
 }
-
 .task-actions button:hover {
     color: var(--primary-color);
 }
-
 /* ========================
      LISTA TASK COMPLETATI
    ======================== */
@@ -409,14 +374,6 @@ p.task-note {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
-
-@media (min-width: 768px) and (max-width: 1100px) {
-    .completed-task-list {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
 @media (max-width: 768px) {
     .priority-grid {
         grid-template-columns: 1fr;
@@ -431,7 +388,6 @@ p.task-note {
         grid-template-columns: repeat(1, 1fr);
     }
 }
-
 /* ===================
      BARRA FILTRO TASK 
    =================== */
@@ -443,7 +399,6 @@ p.task-note {
     align-items: center;
     justify-content: space-between;
 }
-
 .task-filter-bar input,
 .task-filter-bar select {
     padding: 0.5rem 1rem;
@@ -451,20 +406,15 @@ p.task-note {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
 }
-
-
 /* =============== 
      DROPDOWN 
    =============== */
-
-
 .dropdown {
     position: relative;
     display: inline-flex;
     margin-left: 0.5rem;
     gap: 0.5rem;
 }
-
 .dropbtn,
 .reset-filter-btn {
     background: none;
@@ -472,7 +422,6 @@ p.task-note {
     cursor: pointer;
     padding: 4px;
 }
-
 .dropdown-content {
     display: none;
     position: absolute;
@@ -485,7 +434,6 @@ p.task-note {
     z-index: 1000;
     border-radius: 0.5rem;
 }
-
 .dropdown-content select,
 .dropdown-content input {
     display: block;
@@ -493,32 +441,26 @@ p.task-note {
     margin-bottom: 0.8rem;
     width: 100%;
 }
-
 .dropdown-content.show {
     display: block;
 }
-
 h2 {
     margin: 0;
 }
-
 /* =============== 
     MESSAGGI TOAST
    =============== */
-
 .toast-container {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 9999;        /* in primo piano */
+  z-index: 9999;        
   display: flex;
   flex-direction: column;
-  gap: 10px;            /* spazio verticale tra toast */
-  max-width: 300px;     /* larghezza massima */
-  pointer-events: none; /* permette click sotto i toast */
+  gap: 10px;            
+  max-width: 300px;     
+  pointer-events: none; 
 }
-
-/* Stile base del singolo toast */
 .toast {
   background-color: #333;
   color: #fff;
@@ -528,28 +470,21 @@ h2 {
   font-size: 14px;
   opacity: 0;
   transform: translateX(100%);
-  pointer-events: auto; /* rendi cliccabile il toast */
+  pointer-events: auto; 
   animation: slideIn 0.3s forwards, fadeOut 0.3s 3.7s forwards;
 }
-
-/* Differenzia i toast per tipo di messaggio */
 .toast.info {
-  background-color: #2196F3; /* blu */
+  background-color: #2196F3; 
 }
-
 .toast.success {
-  background-color: #4CAF50; /* verde */
+  background-color: #4CAF50; 
 }
-
 .toast.warning {
-  background-color: #ff9800; /* arancione */
+  background-color: #ff9800; 
 }
-
 .toast.error {
-  background-color: #f44336; /* rosso */
+  background-color: #f44336; 
 }
-
-/* Animazioni */
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -560,7 +495,6 @@ h2 {
     transform: translateX(0);
   }
 }
-
 @keyframes fadeOut {
   from {
     opacity: 1;

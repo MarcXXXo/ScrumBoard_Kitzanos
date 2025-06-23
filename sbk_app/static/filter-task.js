@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const log = document.getElementById('header');
     const actualLog = log.dataset.logged;
 
-    document.querySelectorAll('.task-card:not(.completed)').forEach(card => {
+    document.querySelectorAll('.task-card').forEach(card => {
         const dateText = card.dataset.creazione;
         const creator = card.dataset.user;
         console.log(card.outerHTML);
@@ -115,8 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (dateText !== todayStr) {
-            // Aggiungi una classe CSS per colorarla
-            card.classList.add('vecchia-task');
+            if(!card.classList.contains('completed') && !card.classList.contains('archivied')){
+                // Aggiungi una classe CSS per colorarla
+                card.classList.add('vecchia-task');
+            }
         }
     });
 
@@ -153,5 +155,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     break;
             }
         });
+    });
+
+    document.querySelectorAll('.collapsible-note-trigger').forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const container = trigger.closest('.collapsible-note-container');
+            const content = container.querySelector('.collapsible-note');
+
+            if (container.classList.contains('active')) {
+                // Chiudi
+                content.style.maxHeight = '0px';
+                container.classList.remove('active');
+            } else {
+                // Apri
+                content.style.maxHeight = content.scrollHeight + 'px';
+                container.classList.add('active');
+            }
+        });
+       
     });
 });
