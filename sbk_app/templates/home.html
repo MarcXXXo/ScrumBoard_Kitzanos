@@ -1,21 +1,26 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Matrice delle Priorità</title>
   <link rel="stylesheet" href="{% static 'style.css' %}">
   <!--<link rel="stylesheet" href="{% static 'font/Montserrat-Thin.woff2' %}">-->
   <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">-->
 </head>
+
 <body>
   <div class="container">
     {% if user.is_authenticated %}
-      <div class="header" id="header" data-logged="{{user.username}}"><h3 >Benvenuto {{ user.username }}</h3> <h3><a href="{% url 'logout' %}">Logout</a></h3></div>
+    <div class="header" id="header" data-logged="{{user.username}}">
+      <h3>Benvenuto {{ user.username }}</h3>
+      <h3><a href="{% url 'logout' %}">Logout</a></h3>
+    </div>
     {% endif %}
     <!-- Tabs -->
-    <div class="tabs" id = "tabs">
+    <div class="tabs" id="tabs">
       <button class="tab active" type="button" data-tab="attive">Attività Attive</button>
       <button class="tab" type="button" data-tab="completate">Completate</button>
       <button class="tab" type="button" data-tab="storico">Archiviate</button>
@@ -25,16 +30,16 @@
     <div class="card tab-content active" id="attive">
       <div class="task-filter-bar">
 
-        <h2>Matrice delle Priorità </h2> 
+        <h2>Matrice delle Priorità </h2>
 
         <!-- Wrapper dropdown -->
         <div class="dropdown">
-          
+
           <!-- Icona per mostrare/nascondere il menu -->
           <button id="filterToggle" class="dropbtn" aria-haspopup="true" aria-expanded="false">
             <img src="{% static 'icone/filter.svg' %}" alt="Filtri" style="width: 24px; height: 24px;">
           </button>
-      
+
           <!-- Menu a comparsa -->
           <div id="filterMenu" class="dropdown-content" role="menu" aria-labelledby="filterToggle">
             <input type="text" id="task-search" class="task-search" placeholder="Cerca per testo">
@@ -47,7 +52,7 @@
               <option value="Task">Task</option>
               <option value="Decisione">Decisione</option>
             </select>
-      
+
             <select id="filter-priorita">
               <option value="">Tutte le Priorità</option>
               <option value="UI">Urgente e Importante</option>
@@ -55,7 +60,7 @@
               <option value="UN">Urgente Non Importante</option>
               <option value="NN">Non Urgente Non Importante</option>
             </select>
-      
+
             {% if user.is_superuser %}
             <select id="filter-utente">
               <option value="">Tutti gli Utenti</option>
@@ -74,12 +79,13 @@
       <!-- <h2>Matrice delle Priorità </h2> -->
       <div id="task-edit-id-display">{{task.id}}</div>
 
-      <form method="POST" class="input-group" id ="input-group">
+      <form method="POST" class="input-group" id="input-group">
         {% csrf_token %}
-        <input type="hidden" name="task_id" id="task_id" >
-        <input maxlength="25" title ="Max 25 caratteri" type="text" name="descrizione" id="descrizione" placeholder="Descrizione attività">
+        <input type="hidden" name="task_id" id="task_id">
+        <input maxlength="25" title="Max 25 caratteri" type="text" name="descrizione" id="descrizione"
+          placeholder="Descrizione attività">
         <textarea name="note" id="note" placeholder="Note (opzionale)" rows="3"></textarea>
-        <select name="tipo" id="tipo" title ="Tipo di Task" required>
+        <select name="tipo" id="tipo" title="Tipo di Task" required>
           <option value="Email">Email</option>
           <option value="Telefono">Telefono</option>
           <option value="Documento">Documento</option>
@@ -87,8 +93,8 @@
           <option value="Task">Task</option>
           <option value="Decisione">Decisione</option>
         </select>
-      
-        <select name="priorita" id="priorita" title ="Priorità" required>
+
+        <select name="priorita" id="priorita" title="Priorità" required>
           <option value="UI">Urgente e Importante</option>
           <option value="IN">Importante Non Urgente</option>
           <option value="UN">Urgente Non Importante</option>
@@ -102,7 +108,7 @@
           {% endfor %}
         </select>
         {% endif %}
-      
+
         <button type="submit" class="add-button" id="form-button">Aggiungi</button>
       </form>
 
@@ -128,6 +134,7 @@
                 </div>
               </div>
               {% endif %}
+              <div class="task-spacer"></div>
               <div class="task-details">
                 <div class="task-type">
                   <div class="task-pie">
@@ -135,12 +142,12 @@
                     {% if task.modificato_da and task.modificato_da.username != task.creatore.username %}
                     <p class="task-info">Modificata da {{ task.modificato_da.username }}</p>
                     {% endif %}
-        
                   </div>
                 </div>
                 <div class="task-actions">
                   <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}"
-                    data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}" /></button>
+                    data-priorita="{{ task.priorita }}" title="Modifica"> <img
+                      src="{% static 'icone/pencil.svg' %}" /></button>
                   <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"> <img
                       src="{% static 'icone/check.svg' %}" /></button>
                   <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"> <img
@@ -158,7 +165,7 @@
           <h3>Importante Non Urgente</h3>
           <div class="task-list">
             {% for task in tasks_in %}
-              <div class="task-card" data-task-id={{task.id}} data-priorita="{{ task.priorita }}"
+            <div class="task-card" data-task-id={{task.id}} data-priorita="{{ task.priorita }}"
               data-creazione="{{ task.data_creazione|date:'d/m/Y' }}" data-user="{{task.creatore.username}}">
               <div class="task-header">
                 <div class="task-title">{{ task.descrizione }}</div>
@@ -174,6 +181,7 @@
                 </div>
               </div>
               {% endif %}
+              <div class="task-spacer"></div>
               <div class="task-details">
                 <div class="task-type">
                   <div class="task-pie">
@@ -181,12 +189,13 @@
                     {% if task.modificato_da and task.modificato_da.username != task.creatore.username %}
                     <p class="task-info">Modificata da {{ task.modificato_da.username }}</p>
                     {% endif %}
-        
+
                   </div>
                 </div>
                 <div class="task-actions">
                   <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}"
-                    data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}" /></button>
+                    data-priorita="{{ task.priorita }}" title="Modifica"> <img
+                      src="{% static 'icone/pencil.svg' %}" /></button>
                   <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"> <img
                       src="{% static 'icone/check.svg' %}" /></button>
                   <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"> <img
@@ -195,7 +204,7 @@
               </div>
             </div>
             {% empty %}
-              <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
+            <!-- <p>Nessuna task in questa priorità</p>  Messaggio quando la lista è vuota-->
             {% endfor %}
           </div>
         </div>
@@ -204,7 +213,7 @@
           <h3>Urgente Non Importante</h3>
           <div class="task-list">
             {% for task in tasks_un %}
-              <div class="task-card" data-task-id={{task.id}} data-priorita="{{ task.priorita }}"
+            <div class="task-card" data-task-id={{task.id}} data-priorita="{{ task.priorita }}"
               data-creazione="{{ task.data_creazione|date:'d/m/Y' }}" data-user="{{task.creatore.username}}">
               <div class="task-header">
                 <div class="task-title">{{ task.descrizione }}</div>
@@ -220,6 +229,7 @@
                 </div>
               </div>
               {% endif %}
+              <div class="task-spacer"></div>
               <div class="task-details">
                 <div class="task-type">
                   <div class="task-pie">
@@ -227,12 +237,13 @@
                     {% if task.modificato_da and task.modificato_da.username != task.creatore.username %}
                     <p class="task-info">Modificata da {{ task.modificato_da.username }}</p>
                     {% endif %}
-        
+
                   </div>
                 </div>
                 <div class="task-actions">
                   <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}"
-                    data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}" /></button>
+                    data-priorita="{{ task.priorita }}" title="Modifica"> <img
+                      src="{% static 'icone/pencil.svg' %}" /></button>
                   <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"> <img
                       src="{% static 'icone/check.svg' %}" /></button>
                   <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"> <img
@@ -259,6 +270,7 @@
               {% if task.note %}
               <div class="collapsible-note-container">
                 <div class="note-header">
+                  
                   <h4 class="collapsible-note-trigger">Note</h4>
                 </div>
                 <div class="collapsible-note">
@@ -266,6 +278,7 @@
                 </div>
               </div>
               {% endif %}
+              <div class="task-spacer"></div>
               <div class="task-details">
                 <div class="task-type">
                   <div class="task-pie">
@@ -273,12 +286,13 @@
                     {% if task.modificato_da and task.modificato_da.username != task.creatore.username %}
                     <p class="task-info">Modificata da {{ task.modificato_da.username }}</p>
                     {% endif %}
-        
+
                   </div>
                 </div>
                 <div class="task-actions">
                   <button class="edit-task" data-task-id="{{ task.id }}" data-tipo="{{ task.tipo }}"
-                    data-priorita="{{ task.priorita }}" title="Modifica"> <img src="{% static 'icone/pencil.svg' %}" /></button>
+                    data-priorita="{{ task.priorita }}" title="Modifica"> <img
+                      src="{% static 'icone/pencil.svg' %}" /></button>
                   <button class="complete-task" data-task-id="{{ task.id }}" title="Completa"> <img
                       src="{% static 'icone/check.svg' %}" /></button>
                   <button class="delete-task" data-task-id="{{ task.id }}" title="Elimina"> <img
@@ -298,17 +312,17 @@
     <!-- Sezione COMPLETATE -->
     <div class="card tab-content" id="completate">
       <div class="task-filter-bar">
-    
+
         <h2>Attività Completate </h2>
-    
+
         <!-- Wrapper dropdown -->
         <div class="dropdown">
-    
+
           <!-- Icona per mostrare/nascondere il menu -->
           <button id="filterToggle_comp" class="dropbtn" aria-haspopup="true" aria-expanded="false">
             <img src="{% static 'icone/filter.svg' %}" alt="Filtri" style="width: 24px; height: 24px;">
           </button>
-    
+
           <!-- Menu a comparsa -->
           <div id="filterMenu_comp" class="dropdown-content" role="menu" aria-labelledby="filterToggle_comp">
             <input type="text" id="task-search_comp" class="task-search" placeholder="Cerca per testo">
@@ -321,7 +335,7 @@
               <option value="Task">Task</option>
               <option value="Decisione">Decisione</option>
             </select>
-    
+
             <select id="filter-priorita_comp">
               <option value="">Tutte le Priorità</option>
               <option value="UI">Urgente e Importante</option>
@@ -329,7 +343,7 @@
               <option value="UN">Urgente Non Importante</option>
               <option value="NN">Non Urgente Non Importante</option>
             </select>
-    
+
             {% if user.is_superuser %}
             <select id="filter-utente_comp">
               <option value="">Tutti gli Utenti</option>
@@ -351,10 +365,11 @@
                           {% if task.priorita == 'UI' %}urgent-important
                           {% elif task.priorita == 'IN' %}important-not-urgent
                           {% elif task.priorita == 'UN' %}urgent-not-important
-                          {% else %}not-urgent-not-important{% endif %}" data-creazione="{{ task.data_creazione|date:'d/m/Y' }}" data-user="{{task.creatore.username}}">
+                          {% else %}not-urgent-not-important{% endif %}"
+          data-creazione="{{ task.data_creazione|date:'d/m/Y' }}" data-user="{{task.creatore.username}}">
           <div class="task-header">
             <div class="task-title" id="task-title_comp">{{ task.descrizione }}</div>
-    
+
           </div>
           <div class="task-details-complete">
             <p class="footer-info-1" id="task-tipo_comp"><strong> {{ task.tipo }}</strong></p>
@@ -373,21 +388,21 @@
         {% endif %}
       </div>
     </div>
-    
+
     <!-- Sezione ARCHIVIATE -->
     <div class="card tab-content" id="storico">
       <div class="task-filter-bar">
-      
+
         <h2>Archivio Completate</h2>
-      
+
         <!-- Wrapper dropdown -->
         <div class="dropdown">
-      
+
           <!-- Icona per mostrare/nascondere il menu -->
           <button id="filterToggle_arch" class="dropbtn" aria-haspopup="true" aria-expanded="false">
             <img src="{% static 'icone/filter.svg' %}" alt="Filtri" style="width: 24px; height: 24px;">
           </button>
-      
+
           <!-- Menu a comparsa -->
           <div id="filterMenu_arch" class="dropdown-content" role="menu" aria-labelledby="filterToggle_comp">
             <input type="text" id="task-search_arch" class="task-search" placeholder="Cerca per testo">
@@ -400,7 +415,7 @@
               <option value="Task">Task</option>
               <option value="Decisione">Decisione</option>
             </select>
-      
+
             <select id="filter-priorita_arch">
               <option value="">Tutte le Priorità</option>
               <option value="UI">Urgente e Importante</option>
@@ -408,7 +423,7 @@
               <option value="UN">Urgente Non Importante</option>
               <option value="NN">Non Urgente Non Importante</option>
             </select>
-      
+
             {% if user.is_superuser %}
             <select id="filter-utente_arch">
               <option value="">Tutti gli Utenti</option>
@@ -425,57 +440,60 @@
       </div>
       <div class="archived-task-list">
         {% regroup storico_tasks by data_archiviazione as day_list %}
-      
+
         {% for giorno in day_list %}
-      
-        <h3>{{ giorno.grouper|date:"l d F Y" }}</h3>
-        {% for task in giorno.list %}
-        <div class="task-card {% if task.archiviata %}archivied{% endif %}
-                    {% if task.priorita == 'UI' %}urgent-important
-                    {% elif task.priorita == 'IN' %}important-not-urgent
-                    {% elif task.priorita == 'UN' %}urgent-not-important
-                    {% else %}not-urgent-not-important{% endif %}" data-creazione="{{ task.data_creazione|date:'d/m/Y' }}" data-user="{{task.creatore.username}}">
-          <div class="task-header">
-            <div class="task-title" id="task-title_arch">{{ task.descrizione }}</div>
-      
+        <div class="daily-arch">
+          <h3>{{ giorno.grouper|date:"l d F Y" }}</h3>
+          {% for task in giorno.list %}
+          <div class="task-card {% if task.archiviata %}archivied{% endif %}
+                            {% if task.priorita == 'UI' %}urgent-important
+                            {% elif task.priorita == 'IN' %}important-not-urgent
+                            {% elif task.priorita == 'UN' %}urgent-not-important
+                            {% else %}not-urgent-not-important{% endif %}"
+            data-creazione="{{ task.data_creazione|date:'d/m/Y' }}" data-user="{{task.creatore.username}}">
+            <div class="task-header">
+              <div class="task-title" id="task-title_arch">{{ task.descrizione }}</div>
+        
+            </div>
+            <div class="task-details-complete">
+              <p class="footer-info-1" id="task-tipo_arch"><strong> {{ task.tipo }}</strong></p>
+              <p class="footer-info-2" id="priority_arch">
+                {% if task.priorita == "UI" %}<strong>Urgente e Importante</strong> {% endif %}
+                {% if task.priorita == "IN" %}<strong>Importante Non Urgente</strong>{% endif %}
+                {% if task.priorita == "UN" %}<strong>Urgente Non Importante</strong>{% endif %}
+                {% if task.priorita == "NN" %}<strong>Non Urgente Non Importante</strong>{% endif %}
+              </p>
+              <p class="footer-info-3" id="task-creator_arch">Creata da <strong>{{ task.creatore.username }}</strong></p>
+            </div>
           </div>
-          <div class="task-details-complete">
-            <p class="footer-info-1" id="task-tipo_arch"><strong> {{ task.tipo }}</strong></p>
-            <p class="footer-info-2" id="priority_arch">
-              {% if task.priorita == "UI" %}<strong>Urgente e Importante</strong> {% endif %}
-              {% if task.priorita == "IN" %}<strong>Importante Non Urgente</strong>{% endif %}
-              {% if task.priorita == "UN" %}<strong>Urgente Non Importante</strong>{% endif %}
-              {% if task.priorita == "NN" %}<strong>Non Urgente Non Importante</strong>{% endif %}
-            </p>
-            <p class="footer-info-3" id="task-creator_arch">Creata da <strong>{{ task.creatore.username }}</strong></p>
-          </div>
-        </div>
-      
+        
         {% endfor %}
+        </div>
         {% endfor %}
       </div>
-    </div> 
-    
-  
-  
-  <div id="toast-container" class="toast-container"></div>
-  <script src="{% static 'toast.js' %}"></script>
-  <script id="django-messages" type="application/json">
+    </div>
+
+
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="{% static 'toast.js' %}"></script>
+    <script id="django-messages" type="application/json">
       [
         {% for message in messages %}
           {"level": "{{ message.level_tag }}", "text": "{{ message|escapejs }}"}{% if not forloop.last %},{% endif %}
         {% endfor %}
       ]
     </script>
-  <script>
-    document.cookie = "csrftoken={{ csrf_token }}";
-  </script>
-  <script src="{% static 'priorities.js' %}"></script>
-  <script src="{% static 'tabs.js' %}"></script>
-  <script src="{% static 'edit-task.js' %}"></script>
-  <script src="{% static 'filter-task.js' %}"></script>
-  <script src="{% static 'dragndrop.js' %}"></script>
-  
-  
+    <script>
+      document.cookie = "csrftoken={{ csrf_token }}";
+    </script>
+    <script src="{% static 'priorities.js' %}"></script>
+    <script src="{% static 'tabs.js' %}"></script>
+    <script src="{% static 'edit-task.js' %}"></script>
+    <script src="{% static 'filter-task.js' %}"></script>
+    <script src="{% static 'dragndrop.js' %}"></script>
+
+
 </body>
+
 </html>

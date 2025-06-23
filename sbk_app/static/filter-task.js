@@ -24,7 +24,7 @@ function setupFilter(toggleId, menuId, inputId, tipoId, prioritaId, utenteId, ca
             const matchUtente = utente === "" || creatore === utente;
 
             const visible = matchSearch && matchTipo && hasPriorita && matchUtente;
-            card.style.display = visible ? "block" : "none";
+            card.style.display = visible ? "flex" : "none";
         });
     }
 
