@@ -26,7 +26,7 @@ Il progetto è organizzato in modo modulare per facilitare manutenzione, scalabi
 
     - urls.py: definizione delle rotte per la home page, completamento e cancellazione task.
 
-    - views.py: logica backend per la visualizzazione, creazione, modifica, completamento e eliminazione dei task. Include filtri basati sui ruoli utenti (coordinatori e                     utenti normali).
+    - views.py: logica backend per la visualizzazione, creazione, modifica, completamento e eliminazione dei task. Include filtri basati sui ruoli utenti (coordinatori e utenti normali).
 
   4. Cartella static
 
@@ -36,7 +36,7 @@ Il progetto è organizzato in modo modulare per facilitare manutenzione, scalabi
 
     - js/tabs.js: gestione interattiva del cambio tabs in interfacce multiple.
 
-    - js/task.js: gestione di editing, completamento, eliminazione dei task e filtri dinamici.
+    - js/task.js: gestione di editing, completamento, eliminazione dei task e filtri dinamici. (suddiviso in filter-task.js e edit-task.js)
 
     - font/Montserrat-Medium.woff2: font Montserrat per tipografia coerente.
 
