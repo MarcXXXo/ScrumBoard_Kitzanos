@@ -1,7 +1,0 @@
-Verificare filtro sulle priorità in "completate"
-
-Aggiungere drag&drop delle task
-
-Verificare il tremolio della pagina quando si filtra (sicuramente c'è da trovare un'alternativa 
-al ricaricamento della pagina)
-
