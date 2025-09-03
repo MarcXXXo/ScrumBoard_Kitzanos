@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     # Middleware WhiteNoise per servire file statici in produzione:
     # Da decommentare per deploy su Render.com
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -117,7 +117,7 @@ DATABASES = {
 }
 
 #Da decommentare per deploy su Render.com
-#DATABASES["default"] = dj_database_url.parse("postgresql://sbk_app_user:vPYCsxvOXpjSi3fkehdEOjiRLeI26d6G@dpg-d15v9uodl3ps7387nu7g-a.frankfurt-postgres.render.com/sbk_app")
+DATABASES["default"] = dj_database_url.parse("postgresql://db_sbk_user:ZGfnkWlL4Iolsaw6LA4wYFPYONWqjEoy@dpg-d2s0s6jipnbc73e3svg0-a.frankfurt-postgres.render.com/db_sbk")
 
 # ========================
 # VALIDATORI PASSWORD
