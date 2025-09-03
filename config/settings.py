@@ -117,7 +117,7 @@ DATABASES = {
 }
 
 #Da decommentare per deploy su Render.com
-DATABASES["default"] = dj_database_url.parse("postgresql://db_sbk_user:ZGfnkWlL4Iolsaw6LA4wYFPYONWqjEoy@dpg-d2s0s6jipnbc73e3svg0-a.frankfurt-postgres.render.com/db_sbk")
+DATABASES["default"] = dj_database_url.parse("postgresql://sbk_app_8osr_user:cQ6Te4CrarTRx06UxXLcAU8NiHKCCZkx@dpg-d2s117h5pdvs73ellomg-a.frankfurt-postgres.render.com/sbk_app_8osr")
 
 # ========================
 # VALIDATORI PASSWORD
